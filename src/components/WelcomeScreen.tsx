@@ -4,7 +4,12 @@ import { followOA, getPhoneNumber, getAccessToken } from "zmp-sdk/apis";
 const OA_ID = "2112176407138597287";
 const OA_STORAGE_KEY = "HTO_OA_FOLLOW_STATUS";
 
-const WelcomeScreen = ({ onStart }) => {
+type WelcomeScreenProps = {
+  onStart?: (phone?: string) => void;
+  onBack?: () => void;
+};
+
+const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart, onBack }) => {
   const [isStarting, setIsStarting] = useState(false);
   const [isAgreed, setIsAgreed] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
@@ -12,14 +17,14 @@ const WelcomeScreen = ({ onStart }) => {
   const handleStart = async () => {
     if (isStarting || !isAgreed) return;
     setIsStarting(true);
-    
+
     const hasFollowed = localStorage.getItem(OA_STORAGE_KEY);
-    if (hasFollowed !== 'true') {
+    if (hasFollowed !== "true") {
       try {
         await followOA({ id: OA_ID });
-        localStorage.setItem(OA_STORAGE_KEY, 'true');
-      } catch (e) {
-        console.log("[ZaloSDK] Popup bị đóng hoặc người dùng từ chối quan tâm.");
+        localStorage.setItem(OA_STORAGE_KEY, "true");
+      } catch {
+        console.log("[ZaloSDK] User closed follow OA popup or declined.");
       }
     }
 
@@ -29,219 +34,225 @@ const WelcomeScreen = ({ onStart }) => {
       const accessToken = await getAccessToken({});
       const { token } = await getPhoneNumber({});
 
-      const response = await fetch('https://api.hto.edu.vn/get-phone-new', {
-        method: 'POST',
+      const response = await fetch("https://api.hto.edu.vn/get-phone-new", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          accessToken: accessToken,
-          code: token
-        })
+          accessToken,
+          code: token,
+        }),
       });
-      
+
       const data = await response.json();
-      
-      if (data.success && data.phoneNumber) {
-        fetchedPhone = data.phoneNumber;
-      }
+      fetchedPhone =
+        data?.phoneNumber ||
+        data?.data?.number ||
+        data?.data?.phone_number ||
+        data?.number ||
+        "";
     } catch (error) {
-      console.error("[Zalo SDK / API Error]: Lỗi hoặc người dùng từ chối cấp quyền", error);
+      console.error("[Zalo SDK / API Error] Failed to get phone number", error);
     } finally {
       setIsStarting(false);
-      if (onStart) onStart(fetchedPhone);
+      onStart?.(fetchedPhone);
     }
   };
 
   return (
-    <div className="w-full min-h-screen relative flex flex-col bg-gradient-to-b from-[#0f172a] via-[#1e3a8a] to-[#0ea5e9] overflow-y-auto px-5 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] fade-in">
-      
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none"></div>
+    <div className="relative flex min-h-screen w-full flex-col overflow-y-auto bg-gradient-to-b from-[#0f172a] via-[#1e3a8a] to-[#0ea5e9] px-5 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] fade-in">
+      <div className="pointer-events-none absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20" />
+      <div className="pointer-events-none absolute left-1/2 top-20 h-64 w-64 -translate-x-1/2 rounded-full bg-cyan-500/30 blur-[80px]" />
 
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-64 h-64 bg-cyan-500/30 rounded-full blur-[80px] pointer-events-none"></div>
+      <div className="relative z-10 mt-6 mb-4 flex flex-col items-center">
+        <div className="mb-4 flex w-full justify-start">
+          <button
+            type="button"
+            onClick={onBack}
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 backdrop-blur-md"
+          >
+            <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+        </div>
 
-      <div className="relative z-10 flex flex-col items-center mt-6 mb-4">
-        <div className="p-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-[0_0_30px_rgba(14,165,233,0.3)]">
+        <div className="rounded-2xl border border-white/20 bg-white/10 p-3 shadow-[0_0_30px_rgba(14,165,233,0.3)] backdrop-blur-md">
           <img
             src="https://res.cloudinary.com/djyq3kmgb/image/upload/v1771898961/Logo_HTO_GROUPpng-02_2_fpe7wl.png"
             alt="HTO Logo"
-            className="object-contain w-14 h-14"
+            className="h-14 w-14 object-contain"
           />
         </div>
 
-        <h1 className="mt-3 text-3xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-100 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)] text-center uppercase leading-tight">
+        <h1 className="mt-3 bg-gradient-to-r from-cyan-300 to-blue-100 bg-clip-text text-center text-3xl font-black uppercase leading-tight tracking-widest text-transparent drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]">
           HTO FUTURE MAP
         </h1>
 
-        <h2 className="flex items-center justify-center gap-2 mt-1 text-xl font-bold tracking-wider text-yellow-400 uppercase drop-shadow-md whitespace-nowrap">
-          <span>Bản Đồ Tương Lai 2030</span>
+        <h2 className="mt-1 flex items-center justify-center gap-2 whitespace-nowrap text-xl font-bold uppercase tracking-wider text-yellow-400 drop-shadow-md">
+          <span>Ban Do Tuong Lai 2030</span>
           <span className="text-2xl">🌍</span>
         </h2>
 
-        <p className="px-1 mt-2 text-base font-medium leading-relaxed text-center text-blue-100">
-          Khám phá lộ trình sự nghiệp đến 2030 qua những câu hỏi trắc nghiệm thú vị và chính xác.
+        <p className="mt-2 px-1 text-center text-base font-medium leading-relaxed text-blue-100">
+          Kham pha lo trinh su nghiep den 2030 qua nhung cau hoi trac nghiem thu vi va chinh xac.
         </p>
       </div>
 
-      <div className="relative z-10 w-full my-2">
+      <div className="relative z-10 my-2 w-full">
         <div className="grid grid-cols-2 gap-3">
-          {/* Box 1 */}
-          <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl py-5 px-2 flex flex-col items-center text-center shadow-[0_8px_32px_rgba(0,0,0,0.15)]">
-            <div className="flex items-center justify-center w-16 h-16 mb-2 overflow-hidden shadow-lg bg-white/10 rounded-xl shadow-cyan-500/30">
-              <img src="https://i.ibb.co/C3THq22r/image-removebg-preview-2.png" alt="Nhanh chóng" className="object-contain w-full h-full" />
+          <div className="flex flex-col items-center rounded-3xl border border-white/20 bg-white/10 px-2 py-5 text-center shadow-[0_8px_32px_rgba(0,0,0,0.15)] backdrop-blur-lg">
+            <div className="mb-2 flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-white/10 shadow-lg shadow-cyan-500/30">
+              <img src="https://i.ibb.co/C3THq22r/image-removebg-preview-2.png" alt="Nhanh chong" className="h-full w-full object-contain" />
             </div>
-            <div className="mb-1 text-base font-black tracking-wider uppercase text-cyan-300">Nhanh chóng</div>
-            <div className="text-sm text-blue-100">5-15 Phút làm bài</div>
+            <div className="mb-1 text-base font-black uppercase tracking-wider text-cyan-300">Nhanh chong</div>
+            <div className="text-sm text-blue-100">5-15 phut lam bai</div>
           </div>
 
-          {/* Box 2 */}
-          <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl py-5 px-2 flex flex-col items-center text-center shadow-[0_8px_32px_rgba(0,0,0,0.15)]">
-             <div className="flex items-center justify-center w-16 h-16 mb-2 overflow-hidden shadow-lg bg-white/10 rounded-xl shadow-pink-500/30">
-              <img src="https://i.ibb.co/jPHTMWbj/sticker-hito-04-removebg-preview.png" alt="Chính xác" className="object-cover w-full h-full" />
+          <div className="flex flex-col items-center rounded-3xl border border-white/20 bg-white/10 px-2 py-5 text-center shadow-[0_8px_32px_rgba(0,0,0,0.15)] backdrop-blur-lg">
+            <div className="mb-2 flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-white/10 shadow-lg shadow-pink-500/30">
+              <img src="https://i.ibb.co/jPHTMWbj/sticker-hito-04-removebg-preview.png" alt="Chinh xac" className="h-full w-full object-cover" />
             </div>
-            <div className="mb-1 text-base font-black tracking-wider text-pink-300 uppercase">Chính xác</div>
-            <div className="text-sm text-blue-100">Thuật toán tối ưu</div>
+            <div className="mb-1 text-base font-black uppercase tracking-wider text-pink-300">Chinh xac</div>
+            <div className="text-sm text-blue-100">Thuat toan toi uu</div>
           </div>
 
-          {/* Box 3 */}
-          <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl py-5 px-2 flex flex-col items-center text-center shadow-[0_8px_32px_rgba(0,0,0,0.15)]">
-             <div className="flex items-center justify-center w-16 h-16 mb-2 overflow-hidden shadow-lg bg-white/10 rounded-xl shadow-green-500/30">
-              <img src="https://i.ibb.co/WpDbW2Lk/image-removebg-preview-1.png" alt="Lộ trình" className="object-contain w-full h-full" />
+          <div className="flex flex-col items-center rounded-3xl border border-white/20 bg-white/10 px-2 py-5 text-center shadow-[0_8px_32px_rgba(0,0,0,0.15)] backdrop-blur-lg">
+            <div className="mb-2 flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-white/10 shadow-lg shadow-green-500/30">
+              <img src="https://i.ibb.co/WpDbW2Lk/image-removebg-preview-1.png" alt="Lo trinh" className="h-full w-full object-contain" />
             </div>
-            <div className="mb-1 text-base font-black tracking-wider text-green-300 uppercase">Lộ trình</div>
-            <div className="text-sm text-blue-100">Định hướng cụ thể</div>
+            <div className="mb-1 text-base font-black uppercase tracking-wider text-green-300">Lo trinh</div>
+            <div className="text-sm text-blue-100">Dinh huong cu the</div>
           </div>
 
-          {/* Box 4 */}
-          <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl py-5 px-2 flex flex-col items-center text-center shadow-[0_8px_32px_rgba(0,0,0,0.15)]">
-             <div className="flex items-center justify-center w-16 h-16 mb-2 overflow-hidden shadow-lg bg-white/10 rounded-xl shadow-yellow-500/30">
-              <img src="https://i.ibb.co/CKqPDCGJ/unnamed-2-removebg-preview.png" alt="Chuẩn Holland" className="object-contain w-full h-full" />
+          <div className="flex flex-col items-center rounded-3xl border border-white/20 bg-white/10 px-2 py-5 text-center shadow-[0_8px_32px_rgba(0,0,0,0.15)] backdrop-blur-lg">
+            <div className="mb-2 flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-white/10 shadow-lg shadow-yellow-500/30">
+              <img src="https://i.ibb.co/CKqPDCGJ/unnamed-2-removebg-preview.png" alt="Chuan Holland" className="h-full w-full object-contain" />
             </div>
-            <div className="mb-1 text-sm font-black tracking-wider text-yellow-300 uppercase">Chuẩn Holland</div>
-            <div className="text-sm text-blue-100">6 nhóm tính cách</div>
+            <div className="mb-1 text-sm font-black uppercase tracking-wider text-yellow-300">Chuan Holland</div>
+            <div className="text-sm text-blue-100">6 nhom tinh cach</div>
           </div>
         </div>
       </div>
 
-      <div className="relative z-10 w-full pb-6 mt-4">
-        
-        <div className="flex items-start gap-3 px-3 py-3 mb-4 border shadow-inner bg-white/5 rounded-2xl border-white/10">
+      <div className="relative z-10 mt-4 w-full pb-6">
+        <div className="mb-4 flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 px-3 py-3 shadow-inner">
           <input
             type="checkbox"
             id="terms"
             checked={isAgreed}
-            onChange={(e) => setIsAgreed(e.target.checked)}
-            className="w-5 h-5 mt-0.5 rounded cursor-pointer border-white/30 text-cyan-500 focus:ring-cyan-500 bg-white/10 accent-cyan-400 shrink-0"
+            onChange={(event) => setIsAgreed(event.target.checked)}
+            className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded border-white/30 bg-white/10 text-cyan-500 accent-cyan-400 focus:ring-cyan-500"
           />
-          <label htmlFor="terms" className="text-sm font-medium leading-relaxed text-blue-100 cursor-pointer">
-            Tôi đồng ý cho phép HTO Group sử dụng thông tin để tư vấn lộ trình du học theo {' '}
-            <span 
-              onClick={(e) => { e.preventDefault(); setIsTermsOpen(true); }}
-              className="font-bold underline transition-colors pointer-events-auto text-cyan-300 hover:text-cyan-200"
+          <label htmlFor="terms" className="cursor-pointer text-sm font-medium leading-relaxed text-blue-100">
+            Toi dong y cho phep HTO Group su dung thong tin de tu van lo trinh du hoc theo{" "}
+            <span
+              onClick={(event) => {
+                event.preventDefault();
+                setIsTermsOpen(true);
+              }}
+              className="pointer-events-auto font-bold text-cyan-300 underline transition-colors hover:text-cyan-200"
             >
-              Điều khoản sử dụng
-            </span> 
-            {' '} và {' '}
-            <span 
-              onClick={(e) => { e.preventDefault(); setIsTermsOpen(true); }}
-              className="font-bold underline transition-colors pointer-events-auto text-cyan-300 hover:text-cyan-200"
+              Dieu khoan su dung
+            </span>{" "}
+            va{" "}
+            <span
+              onClick={(event) => {
+                event.preventDefault();
+                setIsTermsOpen(true);
+              }}
+              className="pointer-events-auto font-bold text-cyan-300 underline transition-colors hover:text-cyan-200"
             >
-              Chính sách bảo mật
-            </span>.
+              Chinh sach bao mat
+            </span>
+            .
           </label>
         </div>
 
         <button
           onClick={handleStart}
           disabled={isStarting || !isAgreed}
-          className={`w-full bg-gradient-to-r from-cyan-400 to-blue-600 text-white font-black text-lg rounded-full py-4 shadow-[0_0_20px_rgba(14,165,233,0.5)] transition-transform uppercase tracking-wider border border-cyan-300/50 flex justify-center items-center gap-2 ${
-            isStarting || !isAgreed ? "opacity-50 cursor-not-allowed grayscale-[30%]" : "active:scale-95"
+          className={`flex w-full items-center justify-center gap-2 rounded-full border border-cyan-300/50 bg-gradient-to-r from-cyan-400 to-blue-600 py-4 text-lg font-black uppercase tracking-wider text-white shadow-[0_0_20px_rgba(14,165,233,0.5)] transition-transform ${
+            isStarting || !isAgreed ? "cursor-not-allowed opacity-50 grayscale-[30%]" : "active:scale-95"
           }`}
         >
           {isStarting ? (
             <>
-              <div className="w-5 h-5 border-2 border-white rounded-full border-t-transparent animate-spin"></div>
-              <span>Đang xử lý...</span>
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              <span>Dang xu ly...</span>
             </>
           ) : (
-            <span>Bắt đầu test ngay</span>
+            <span>Bat dau test ngay</span>
           )}
         </button>
 
-        <div className="flex items-center justify-center gap-2 px-5 py-2 mx-auto mt-4 border rounded-full bg-black/20 border-white/10 w-max backdrop-blur-md">
+        <div className="mx-auto mt-4 flex w-max items-center justify-center gap-2 rounded-full border border-white/10 bg-black/20 px-5 py-2 backdrop-blur-md">
           <span className="text-xl">📞</span>
-          <span className="text-xs font-semibold tracking-wider text-blue-200 uppercase">
-            Tổng đài hỗ trợ:
-          </span>
-          <span className="text-lg font-black tracking-wider text-cyan-400">
-            1800 9078
-          </span>
+          <span className="text-xs font-semibold uppercase tracking-wider text-blue-200">Tong dai ho tro:</span>
+          <span className="text-lg font-black tracking-wider text-cyan-400">1800 9078</span>
         </div>
       </div>
 
-      {/* Popup Điều khoản bảo mật */}
       {isTermsOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0a1930]/90 backdrop-blur-sm fade-in">
-          <div className="relative w-full max-w-sm max-h-[80vh] flex flex-col bg-gradient-to-b from-[#0f172a] to-[#1e3a8a] border border-cyan-400/30 rounded-3xl shadow-[0_15px_50px_rgba(0,0,0,0.6)] overflow-hidden">
-            
-            <button 
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0a1930]/90 p-4 backdrop-blur-sm fade-in">
+          <div className="relative flex max-h-[80vh] w-full max-w-sm flex-col overflow-hidden rounded-3xl border border-cyan-400/30 bg-gradient-to-b from-[#0f172a] to-[#1e3a8a] shadow-[0_15px_50px_rgba(0,0,0,0.6)]">
+            <button
               onClick={() => setIsTermsOpen(false)}
-              className="absolute z-10 flex items-center justify-center w-8 h-8 text-lg font-bold border rounded-full top-4 right-4 text-white/60 hover:text-white border-white/20 bg-black/30"
+              className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-black/30 text-lg font-bold text-white/60 hover:text-white"
             >
-              ✕
+              ×
             </button>
 
-            <div className="p-6 pb-2 border-b border-white/10">
-              <h3 className="text-xl font-black font-['Montserrat'] uppercase tracking-widest text-cyan-300 drop-shadow-sm">
-                🔒 CHÍNH SÁCH BẢO MẬT
+            <div className="border-b border-white/10 p-6 pb-2">
+              <h3 className="font-['Montserrat'] text-xl font-black uppercase tracking-widest text-cyan-300 drop-shadow-sm">
+                Chinh Sach Bao Mat
               </h3>
             </div>
 
-            <div className="p-6 space-y-4 overflow-y-auto text-base custom-scrollbar text-white/80">
+            <div className="custom-scrollbar space-y-4 overflow-y-auto p-6 text-base text-white/80">
               <p>
-                Cảm ơn bạn đã tham gia chương trình định hướng nghề nghiệp <strong>HTO FUTURE MAP</strong>. Việc bảo mật thông tin cá nhân của bạn là ưu tiên hàng đầu của chúng tôi.
+                Cam on ban da tham gia chuong trinh dinh huong nghe nghiep <strong>HTO FUTURE MAP</strong>. Viec bao mat thong tin ca nhan cua ban la uu tien hang dau cua chung toi.
               </p>
-              
+
               <div>
-                <h4 className="mb-1 text-lg font-bold text-yellow-400">1. Mục đích thu thập dữ liệu</h4>
-                <ul className="pl-4 space-y-1 text-sm list-disc">
-                  <li>Phân tích tự động để trả kết quả trắc nghiệm tính cách.</li>
-                  <li>Tự động gửi file báo cáo PDF về Email của bạn.</li>
-                  <li>Hỗ trợ chuyên gia HTO liên hệ để tư vấn lộ trình du học/nghề nghiệp 1-1 chuyên sâu.</li>
+                <h4 className="mb-1 text-lg font-bold text-yellow-400">1. Muc dich thu thap du lieu</h4>
+                <ul className="list-disc space-y-1 pl-4 text-sm">
+                  <li>Phan tich tu dong de tra ket qua trac nghiem tinh cach.</li>
+                  <li>Tu dong gui file bao cao PDF ve Email cua ban.</li>
+                  <li>Ho tro chuyen gia HTO lien he de tu van lo trinh du hoc/nghe nghiep 1-1 chuyen sau.</li>
                 </ul>
               </div>
 
               <div>
-                <h4 className="mb-1 text-lg font-bold text-yellow-400">2. Cam kết bảo mật (NDPA)</h4>
+                <h4 className="mb-1 text-lg font-bold text-yellow-400">2. Cam ket bao mat (NDPA)</h4>
                 <p className="text-sm">
-                  HTO Group cam kết tuân thủ Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân. Thông tin của bạn được mã hóa an toàn và <strong>tuyệt đối không mua bán hay trao đổi</strong> với bất kỳ bên thứ ba nào nằm ngoài hệ sinh thái đối tác giáo dục của HTO.
+                  HTO Group cam ket tuan thu Nghi dinh 13/2023/ND-CP ve bao ve du lieu ca nhan. Thong tin cua ban duoc ma hoa an toan va <strong>tuyet doi khong mua ban hay trao doi</strong> voi bat ky ben thu ba nao nam ngoai he sinh thai doi tac giao duc cua HTO.
                 </p>
               </div>
 
               <div>
-                <h4 className="mb-1 text-lg font-bold text-yellow-400">3. Quyền của người dùng</h4>
+                <h4 className="mb-1 text-lg font-bold text-yellow-400">3. Quyen cua nguoi dung</h4>
                 <p className="text-sm">
-                  Bạn có quyền yêu cầu trích xuất, sửa đổi hoặc xóa bỏ hoàn toàn dữ liệu cá nhân của mình khỏi hệ thống của HTO Group bất cứ lúc nào thông qua Tổng đài hỗ trợ.
+                  Ban co quyen yeu cau trich xuat, sua doi hoac xoa bo hoan toan du lieu ca nhan cua minh khoi he thong cua HTO Group bat cu luc nao thong qua Tong dai ho tro.
                 </p>
               </div>
             </div>
 
-            <div className="p-5 border-t border-white/10 bg-black/20">
-              <button 
+            <div className="border-t border-white/10 bg-black/20 p-5">
+              <button
                 onClick={() => {
                   setIsAgreed(true);
                   setIsTermsOpen(false);
                 }}
-                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-base rounded-full py-3.5 shadow-lg active:scale-95 transition-transform uppercase tracking-widest"
+                className="w-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 py-3.5 text-base font-bold uppercase tracking-widest text-white shadow-lg transition-transform active:scale-95"
               >
-                Đã hiểu & Đồng ý
+                Da hieu & Dong y
               </button>
             </div>
-
           </div>
         </div>
       )}
-
     </div>
   );
 };

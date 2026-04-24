@@ -1,0 +1,800 @@
+Thiết kế Hệ thống Toàn diện
+ trắc nghiệm thần số học trong 
+hệ thống 
+tuyển sinh
+ HTO
+Phiên bản này không chỉ là một ứng dụng trắc nghiệm đơn thuần, mà là một 
+"Cỗ máy Phân loại Lead Tự động"
+ được tinh chỉnh để phục vụ chính xác các sản phẩm của HTO Group (Đức 18b, Canada Healthcare, Hàn/Đài 2+2).
+🏗️
+ TỔNG QUAN KIẾN TRÚC HỆ THỐNG (FULL VERSION)
+Hệ thống được vận hành theo mô hình 
+Hybrid Cloud
+, kết nối trực tiếp với Zalo và Biz CRM.
+Frontend (Zalo Mini App SDK):
+ Phát triển trên nền React.js. Ưu điểm: Không cần cài đặt, hoạt động ngay trong Zalo, tận dụng được tính năng chia sẻ (Viral) cực mạnh.
+Logic Engine (Backend - Node.js):
+ Xử lý thuật toán Thần số học chuyên sâu, định danh người dùng và render báo cáo PDF.
+Integration Layer (Biz CRM API):
+ Cầu nối đẩy dữ liệu thời gian thực (Real-time) về hệ thống quản trị của anh.
+PDF &amp; Automation Engine:
+ Tự động tạo bản báo cáo cá nhân hóa và gửi Email Marketing.
+📱
+ CHI TIẾT CÁC MÀN HÌNH (UI/UX)
+1. Màn hình Welcome (Landing)
+Giao diện:
+ Mood &amp; Tone "Vũ trụ huyền bí" phối hợp với màu xanh thương hiệu HTO.
+Điểm chạm:
+ Tích hợp 
+Zalo SSO
+. Khi người dùng nhấn "Khám phá ngay", hệ thống tự động xin quyền lấy 
+Họ tên &amp; SĐT
+ từ Zalo.
+Mục tiêu:
+ Giảm 90% tỉ lệ khách hàng thoát do ngại nhập liệu.
+2. Màn hình Nhập liệu Thông minh (Deep Input)
+Đây là phần nâng cấp để lấy dữ liệu gửi PDF và phân loại diện đi Đức/Canada:
+Họ và tên:
+ Nhập theo CCCD (để tính chỉ số Sứ mệnh/Linh hồn chính xác).
+Ngày sinh:
+ Date Picker chuẩn xác.
+Email:
+ Trường bắt buộc (để hệ thống gửi bản PDF chuyên sâu).
+Địa chỉ nhà:
+ Tích hợp bộ lọc Tỉnh/Thành, Quận/Huyện để HTO gửi quà tặng hoặc thư mời hội thảo địa phương.
+Trình độ học vấn:
+ (Cấp 3 / Đang học Đại học / Đã tốt nghiệp Đại học) -&gt; 
+Dữ liệu vàng để lọc diện 18b (Đức).
+3. Màn hình Xử lý (Loading)
+Hiển thị hiệu ứng con số chạy và thông báo: 
+"Hito đang phân tích tần số rung động của bạn..."
+ tăng tính tò mò.
+4. Màn hình Kết quả (Interactive Report)
+Chỉ số cốt lõi:
+ Đường đời (Life Path), Sứ mệnh, Linh hồn.
+Radar Chart:
+ Biểu đồ 5 cạnh về năng lực: (1) Lãnh đạo, (2) Kỹ thuật, (3) Thấu cảm, (4) Sáng tạo, (5) Kỷ luật.
+Nút Call-to-action (CTA):
+ "Tải báo cáo chi tiết về Email" và "Kết nối với chuyên gia HTO".
+🧮
+ THUẬT TOÁN ÁNH XẠ NĂNG LỰC &amp; THỊ TRƯỜNG HTO
+Hệ thống sẽ chạy logic phân loại tự động dựa trên con số và trình độ học vấn:
+<w:tblPr><w:tblW w:w="9555" w:type="dxa"/><w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/></w:tblPr><w:tblGrid><w:gridCol w:w="1795"/><w:gridCol w:w="2320"/><w:gridCol w:w="5440"/></w:tblGrid><w:tr w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w14:paraId="64D1EF0D" w14:textId="77777777" w:rsidTr="003D0E3C"><w:trPr><w:trHeight w:val="330"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="1795" w:type="dxa"/><w:tcBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="2F8AA83F" w14:textId="77777777" w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w:rsidRDefault="003D0E3C" w:rsidP="003D0E3C"><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:jc w:val="center"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr></w:pPr><w:r w:rsidRPr="003D0E3C"><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr><w:t>Con số chính
+<w:tcPr><w:tcW w:w="2320" w:type="dxa"/><w:tcBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="75653F8B" w14:textId="77777777" w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w:rsidRDefault="003D0E3C" w:rsidP="003D0E3C"><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:jc w:val="center"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr></w:pPr><w:r w:rsidRPr="003D0E3C"><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr><w:t>Năng lực
+<w:tcPr><w:tcW w:w="5440" w:type="dxa"/><w:tcBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="48439C59" w14:textId="77777777" w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w:rsidRDefault="003D0E3C" w:rsidP="003D0E3C"><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:jc w:val="center"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr></w:pPr><w:r w:rsidRPr="003D0E3C"><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr><w:t>Lộ trình HTO Đề xuất
+<w:trPr><w:trHeight w:val="330"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="1795" w:type="dxa"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="64CCB510" w14:textId="77777777" w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w:rsidRDefault="003D0E3C" w:rsidP="003D0E3C"><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr></w:pPr><w:r w:rsidRPr="003D0E3C"><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr><w:t>Số 1, 8
+<w:tcPr><w:tcW w:w="2320" w:type="dxa"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="1C4B23DF" w14:textId="77777777" w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w:rsidRDefault="003D0E3C" w:rsidP="003D0E3C"><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr></w:pPr><w:r w:rsidRPr="003D0E3C"><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr><w:t>Quản lý, Quyết đoán
+<w:tcPr><w:tcW w:w="5440" w:type="dxa"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="09ABDB8F" w14:textId="77777777" w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w:rsidRDefault="003D0E3C" w:rsidP="003D0E3C"><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr></w:pPr><w:r w:rsidRPr="003D0E3C"><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr><w:t>Hàn/Đài:
+ Kinh tế, Quản trị doanh nghiệp.
+<w:trPr><w:trHeight w:val="660"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="1795" w:type="dxa"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="67E6F629" w14:textId="77777777" w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w:rsidRDefault="003D0E3C" w:rsidP="003D0E3C"><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr></w:pPr><w:r w:rsidRPr="003D0E3C"><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr><w:t>Số 4, 7
+<w:tcPr><w:tcW w:w="2320" w:type="dxa"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="227E6F78" w14:textId="77777777" w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w:rsidRDefault="003D0E3C" w:rsidP="003D0E3C"><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr></w:pPr><w:r w:rsidRPr="003D0E3C"><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr><w:t>Kỹ thuật, Logic
+<w:tcPr><w:tcW w:w="5440" w:type="dxa"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="678709A3" w14:textId="77777777" w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w:rsidRDefault="003D0E3C" w:rsidP="003D0E3C"><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr></w:pPr><w:r w:rsidRPr="003D0E3C"><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr><w:t>Hàn, Đài, Đức:
+ Cơ khí, Ô tô (Diện 18b nếu đã có bằng ĐH; Du học nghề nếu là PTTH).
+<w:trPr><w:trHeight w:val="660"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="1795" w:type="dxa"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="32923DF7" w14:textId="77777777" w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w:rsidRDefault="003D0E3C" w:rsidP="003D0E3C"><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr></w:pPr><w:r w:rsidRPr="003D0E3C"><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr><w:t>Số 2, 6, 9
+<w:tcPr><w:tcW w:w="2320" w:type="dxa"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="2F5FFA6F" w14:textId="77777777" w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w:rsidRDefault="003D0E3C" w:rsidP="003D0E3C"><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr></w:pPr><w:r w:rsidRPr="003D0E3C"><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr><w:t>Tử tế, Chăm sóc
+<w:tcPr><w:tcW w:w="5440" w:type="dxa"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="101735AA" w14:textId="77777777" w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w:rsidRDefault="003D0E3C" w:rsidP="003D0E3C"><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr></w:pPr><w:r w:rsidRPr="003D0E3C"><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr><w:t>Canada/Úc:
+ Điều dưỡng, Chăm sóc sức khỏe (Sau ĐH).
+<w:trPr><w:trHeight w:val="330"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="1795" w:type="dxa"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="743AAB9A" w14:textId="77777777" w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w:rsidRDefault="003D0E3C" w:rsidP="003D0E3C"><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr></w:pPr><w:r w:rsidRPr="003D0E3C"><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr><w:t>Số 3, 5
+<w:tcPr><w:tcW w:w="2320" w:type="dxa"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="09D6201F" w14:textId="77777777" w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w:rsidRDefault="003D0E3C" w:rsidP="003D0E3C"><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr></w:pPr><w:r w:rsidRPr="003D0E3C"><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr><w:t>Giao tiếp, Linh hoạt
+<w:tcPr><w:tcW w:w="5440" w:type="dxa"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="769AEB66" w14:textId="77777777" w:rsidR="003D0E3C" w:rsidRPr="003D0E3C" w:rsidRDefault="003D0E3C" w:rsidP="003D0E3C"><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr></w:pPr><w:r w:rsidRPr="003D0E3C"><w:rPr><w:rFonts w:ascii="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="26"/><w:szCs w:val="26"/><w14:ligatures w14:val="none"/></w:rPr><w:t>Đức/Hàn:
+ Du lịch, Khách sạn, Logistics.
+🔌
+ ĐẤU NỐI BIZ CRM &amp; AUTOMATION
+1. Luồng dữ liệu đẩy về CRM (Payload)
+Ngay khi nhấn "Xem kết quả", dữ liệu sau sẽ được đẩy vào Biz CRM:
+JSON
+{
+  "customer": {
+    "full_name": "Nguyễn Văn A",
+    "phone": "090xxxxxxx",
+    "email": "vana@gmail.com",
+    "address": "Phường 5, TP. Vĩnh Long",
+    "education_level": "University_Graduated"
+  },
+  "numerology_result": {
+    "life_path": 7,
+    "suggested_market": "Germany_18b",
+    "note": "Tố chất kỹ thuật cao, đã tốt nghiệp ĐH, phù hợp diện chuyên gia 18b tại Đức."
+  },
+  "marketing": {
+    "source": "Zalo_MiniApp_Numerology",
+    "campaign": "Career_Orientation_DCL_2026",
+    "pdf_status": "Sent_To_Email"
+  }
+}
+2. Quy trình PDF &amp; Email tự động
+Backend
+ tự động render file PDF gồm 5-7 trang phân tích sâu.
+Hệ thống Email
+ gửi thư với tiêu đề cá nhân hóa: 
+"[HTO] Bản đồ năng lực của bạn [Tên_Học_Sinh] - Lộ trình chuyên gia Đức 18b"
+.
+🛠️
+ CÔNG NGHỆ &amp; BẢO MẬT
+Ngôn ngữ:
+ Node.js (Backend) &amp; React.js (Zalo Mini App).
+PDF Engine:
+ Puppeteer (Cho phép thiết kế bản báo cáo đẹp như tạp chí).
+Database:
+ MongoDB Atlas (Lưu trữ và tra cứu lịch sử).
+Security:
+ Mã hóa dữ liệu đầu cuối, tuân thủ Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân của khách hàng.
+💡
+ GIÁ TRỊ CHIẾN LƯỢC DÀNH CHO ANH HÙNG
+Tư vấn bằng dữ liệu:
+ Nhân viên Ban IV khi gọi điện sẽ nắm rõ: 
+"Chào em, chị thấy em là người có số đường đời là 7, rất giỏi kỹ thuật. Với bằng Đại học của em, diện 18b tại Đức của HTO là dành riêng cho em."
+Sở hữu tệp Data cực sạch:
+ Anh có đầy đủ SĐT, Email và Địa chỉ nhà để thực hiện các chiến dịch Marketing 0 đồng (Email Marketing, Zalo Broadcast).
+Tính Viral cao:
+ Học sinh cấp 3 thường có xu hướng chia sẻ kết quả Thần số học. Mỗi lượt chia sẻ là một lần thương hiệu HTO Group lan tỏa đến bạn bè của các em.
+thiết kế bản báo cáo PDF là "đòn chốt" quan trọng nhất. Nó không chỉ cung cấp thông tin mà còn thể hiện sự chuyên nghiệp và 
+tử tế
+ của HTO Group, khiến phụ huynh và học sinh tin tưởng hơn vào lộ trình đề xuất.
+Dưới đây là cấu trúc chi tiết 7 trang cho bản báo cáo PDF 
+"BẢN ĐỒ GIẢI MÃ NĂNG LỰC TOÀN CẦU"
+ để anh đưa vào yêu cầu lập trình:
+TRANG 1: VỎ BẢN BÁO CÁO (COVER PAGE)
+Hình ảnh:
+ Phong cách vũ trụ, các con số và hình ảnh các bạn trẻ vươn ra thế giới.
+Tiêu đề:
+ BẢN ĐỒ GIẢI MÃ NĂNG LỰC &amp; ĐỊNH HƯỚNG SỰ NGHIỆP TOÀN CẦU.
+Cá nhân hóa:
+ "Dành riêng cho bạn: [Tên_Học_Sinh]".
+Thông tin đơn vị:
+ Logo HTO Group và Hotline 1800 9078.
+TRANG 2: THÔNG ĐIỆP TỪ HTO &amp; TRIẾT LÝ SỰ TỬ TẾ
+Nội dung:
+ Lời chào từ anh (Chủ tịch HTO Group).
+Thông điệp:
+ "Chúng tôi không vẽ màu hồng, chúng tôi thiết kế lộ trình thực chất".
+Cam kết:
+ Hợp tác cùng Đại học Cửu Long và các đối tác quốc tế để làm bệ phóng cho nguồn lực Việt.
+TRANG 3: GIẢI MÃ NHỮNG CON SỐ CỐT LÕI
+Chỉ số Đường đời (Life Path):
+ Phân tích con số chủ đạo (Ví dụ: Số 7 - Người quan sát và phân tích).
+Chỉ số Linh hồn &amp; Sứ mệnh:
+ Bạn sinh ra để làm gì? Điều gì khiến bạn hạnh phúc nhất trong công việc?
+Biểu đồ năng lực (Radar Chart):
+ Hiển thị 5 cạnh năng lực (Lãnh đạo - Kỹ thuật - Sáng tạo - Thấu cảm - Kỷ luật).
+TRANG 4: PHÂN TÍCH TÍNH CÁCH &amp; XU HƯỚNG NGHỀ NGHIỆP
+Phân tích sâu:
+ Dựa trên con số, hệ thống sẽ tự động xuất nội dung về ưu/nhược điểm.
+Cảnh báo thời đại AI:
+ Giải thích tại sao tố chất của bạn sẽ không bị thay thế bởi công nghệ (Ví dụ: Sự thấu cảm của số 6 trong ngành Điều dưỡng).
+TRANG 5: LỘ TRÌNH ĐỀ XUẤT (THEO THỊ TRƯỜNG HTO)
+Đây là trang "Sales" quan trọng nhất, logic sẽ tự động nhảy theo dữ liệu đầu vào:
+Lựa chọn 1 (Ưu tiên):
+ Nếu là SV Đại học + Số 4/7/8 -&gt; 
+Đức diện 18b (Chuyên gia Kỹ thuật).
+Lựa chọn 2:
+ Nếu thích Sức khỏe + Số 2/6/9 -&gt; 
+Canada/Úc (Chăm sóc sức khỏe sau đại học).
+Lựa chọn 3:
+ Nếu ưu tiên chi phí + Số 3/5 -&gt; 
+Hàn/Đài (Lộ trình 2+2 hoặc Thạc sĩ).
+Mỗi lộ trình đều có mức lương dự kiến và cơ hội định cư rõ ràng.
+TRANG 6: HỆ SINH THÁI HỖ TRỢ CỦA HTO GROUP
+Hậu cần quốc tế:
+ Giới thiệu văn phòng Saskatchewan (Canada) hỗ trợ đón sân bay, lo chỗ ở.
+Công nghệ minh bạch:
+ Giới thiệu hệ thống CRM giúp khách hàng theo dõi tiến độ hồ sơ 24/7.
+Hỗ trợ địa phương:
+ Hệ thống văn phòng tại HCM, Cần Thơ, Vĩnh Long luôn sẵn sàng đồng hành.
+TRANG 7: LỜI KẾT &amp; HÀNH ĐỘNG (CALL TO ACTION)
+Thông điệp cuối:
+ "Học tinh hoa thế giới - Trở về xây dựng quê hương".
+Ưu đãi đặc biệt:
+ Tặng Voucher "Tư vấn chuyên sâu 1:1 cùng chuyên gia" dành riêng cho người vừa hoàn thành trắc nghiệm.
+Thông tin liên hệ:
+ * QR Code kết nối Zalo chuyên viên phụ trách.
+Địa chỉ văn phòng gần nhất (Dựa theo tỉnh thành khách đã nhập).
+Hotline miễn phí: 1800 9078.
+🛠️
+ GHI CHÚ CHO ĐỘI NGŨ LẬP TRÌNH (TECHNICAL NOTE)
+Dùng công cụ vẽ PDF:
+ Anh nên yêu cầu dùng Puppeteer hoặc HTML-to-PDF để thiết kế bằng code web (HTML/CSS) cho đẹp, sau đó mới xuất ra PDF.
+Cá nhân hóa tối đa:
+ File PDF khi gửi đi phải có tên file là Bao-cao-HTO-[Ten-Khach-Hang].pdf.
+Tối ưu dung lượng:
+ Đảm bảo file PDF dưới 2MB để khách hàng dễ dàng tải về qua 3G/4G tại hội trường.
+Anh thấy cấu trúc 7 trang này đã đủ sức nặng để làm "bệ phóng" cho các em học sinh chưa ạ? Nếu anh đồng ý, tôi có thể hỗ trợ anh soạn 
+nội dung chi tiết cho trang lộ trình Đức 18b
+ – một sản phẩm rất mạnh của anh.
+Để hệ thống có thể tự động đánh giá và xuất báo cáo một cách chuyên nghiệp, chúng ta không "nhúng" một cuốn sách vào app, mà cần 
+số hóa cấu trúc logic
+ của phương pháp Thần số học.
+Dưới đây là lời giải cho việc nguồn dữ liệu từ đâu và cách đưa nó vào hệ thống một cách tối ưu:
+1. Nguồn truy xuất dữ liệu Thần số học từ đâu?
+Dữ liệu này không có một "tổng kho" công cộng, anh cần xác định 2 thành phần chính:
+Phần 1: Công thức toán học (Logic):
+ Sử dụng hệ thống 
+Pythagoras
+ (phổ biến nhất hiện nay). Đây là các quy tắc cộng dồn ngày sinh và chuyển đổi chữ cái tên thành số (A, J, S = 1; B, K, T = 2...). Phần này đội ngũ lập trình sẽ viết thành các hàm (Functions) trong mã nguồn Backend.
+Phần 2: Thư viện nội dung (Content Database):
+ Đây là phần mô tả ý nghĩa các con số và lời khuyên nghề nghiệp. Anh có 3 cách để có nguồn này:
+Cách A (Tốt nhất cho HTO):
+ Anh biên soạn một bộ từ điển riêng dựa trên triết lý "Tử tế" của HTO và các ngành nghề anh đang mạnh (Đức, Canada, Hàn). Điều này giúp kết quả trắc nghiệm không bị chung chung mà hướng trực diện vào sản phẩm của anh.
+Cách B:
+ Thuê chuyên gia Thần số học biên soạn một bộ khung nội dung chuẩn khoa học.
+Cách C:
+ Sử dụng các bộ thư viện có sẵn (Open-source) nhưng cần chỉnh sửa lại để phù hợp với văn hóa Việt Nam.
+2. Có cần "nhúng" toàn bộ cấu trúc vào hệ thống không?
+Câu trả lời là 
+CÓ
+, nhưng dưới dạng 
+Cơ sở dữ liệu cấu trúc (Structured Database)
+, chứ không phải file văn bản.
+Chúng ta sẽ tạo ra một "Ma trận đánh giá" (Mapping Table) trong cơ sở dữ liệu (ví dụ: MongoDB hoặc SQL). Cấu trúc sẽ bao gồm:
+Bảng Chỉ số:
+ Lưu ý nghĩa của các con số từ 1-9, 11, 22 cho từng hạng mục (Tính cách, Thế mạnh, Thách thức).
+Bảng Ngành nghề:
+ Lưu thông tin về các thị trường (Đức 18b, Canada, Hàn Quốc).
+Bảng Ánh xạ (Mapping Logic):
+ Đây là "linh hồn" của hệ thống. Ví dụ:
+Nếu chỉ số đường đời = 7 AND trình độ = Đại học -&gt; Map tới nội dung: "Diện 18b Đức - Kỹ thuật chuyên sâu".
+Nếu chỉ số đường đời = 2 AND trình độ = PTTH -&gt; Map tới nội dung: "Du học nghề Đức/Canada - Chăm sóc sức khỏe".
+3. Cách đưa dữ liệu vào App như thế nào? (Quy trình kỹ thuật)
+Quy trình này sẽ diễn ra hoàn toàn ở 
+Backend
+, đảm bảo App Zalo của anh nhẹ và mượt:
+Số hóa nội dung (Data Entry):
+ Nhân sự HTO sẽ nhập bộ thư viện nội dung vào một trang quản trị (Admin Dashboard). Dữ liệu này được lưu thành các bản ghi trong Database.
+Lập trình bộ máy tính toán (Calculator Engine):
+ Khi học sinh nhập ngày sinh và tên, Backend sẽ chạy các hàm toán học để ra được các "con số định mệnh".
+Truy vấn dữ liệu (Querying):
+ Hệ thống lấy các con số đó "so khớp" với bảng nội dung đã nhập ở bước 1.
+Lắp ghép báo cáo (Assembling):
+Hệ thống lấy đoạn văn về "Số 7" + Đoạn văn về "Ngành kỹ thuật Đức" + Tên của học sinh.
+Tất cả được đẩy vào một Template báo cáo đã thiết kế sẵn.
+Hiển thị &amp; Xuất file:
+Dữ liệu ngắn gọn hiển thị ngay trên màn hình App Zalo.
+Dữ liệu đầy đủ được đóng gói thành file PDF gửi qua Email.
+4. Ưu điểm của việc tự xây dựng "Bộ não" này:
+Tính độc quyền:
+ Bản báo cáo của HTO sẽ không giống bất kỳ đơn vị nào khác trên thị trường.
+Dễ dàng cập nhật:
+ Nếu sau này anh mở thêm thị trường Úc hay Mỹ, anh chỉ cần vào Admin Dashboard thêm một vài dòng mô tả, hệ thống sẽ tự động cập nhật logic tư vấn mà không cần lập trình lại từ đầu.
+Đấu nối CRM:
+ Vì dữ liệu nằm trên server của anh, việc đẩy sang Biz CRM là cực kỳ dễ dàng vì nó cùng một ngôn ngữ.
+Đề xuất hành động:
+ Anh nên bắt đầu bằng việc yêu cầu một nhân sự am hiểu về Thần số học và sản phẩm của HTO soạn ra một file Excel bao gồm: 
+[Con số] - [Tính cách] - [Ngành nghề HTO tương ứng]
+. Đây chính là "nguyên liệu" để tôi hoặc đội ngũ lập trình đưa vào hệ thống.
+Cấu trúc Bảng dữ liệu mẫu (Data Matrix)
+ để anh giao cho nhân sự biên soạn. Bảng này sẽ đóng vai trò là "bộ não" để lập trình viên nạp vào hệ thống App và tạo logic cho file PDF.
+Anh nên yêu cầu nhân sự soạn thảo trên 
+Google Sheets
+ hoặc 
+Excel
+ theo các cột sau:
+BẢNG 1: THƯ VIỆN ĐỊNH DANH (Ý NGHĨA CON SỐ)
+Bảng này dùng để giải mã tính cách tổng quát.
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblCellSpacing w:w="15" w:type="dxa"/><w:tblCellMar><w:top w:w="15" w:type="dxa"/><w:left w:w="15" w:type="dxa"/><w:bottom w:w="15" w:type="dxa"/><w:right w:w="15" w:type="dxa"/></w:tblCellMar><w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/></w:tblPr><w:tblGrid><w:gridCol w:w="1034"/><w:gridCol w:w="700"/><w:gridCol w:w="1480"/><w:gridCol w:w="4176"/><w:gridCol w:w="1954"/></w:tblGrid><w:tr w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w14:paraId="2775228F" w14:textId="77777777" w:rsidTr="00BA05F0"><w:trPr><w:tblHeader/><w:tblCellSpacing w:w="15" w:type="dxa"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="54437447" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Chỉ số
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="3AD0B57D" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Con số
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="73CF5340" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Từ khóa tính cách
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="73B9AC18" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Nội dung phân tích sâu (Dùng cho PDF)
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="350BF9A6" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Hình ảnh/Icon minh họa
+<w:trPr><w:tblCellSpacing w:w="15" w:type="dxa"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="53BB85D7" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Đường đời
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="5C0A644B" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>1
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="15B66D43" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Quyết đoán, Độc lập
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="128A58EB" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Bạn có tố chất của một người tiên phong, thích tự mình quyết định...
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="6081DDFA" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Ngọn đuốc / Mũi tên
+<w:trPr><w:tblCellSpacing w:w="15" w:type="dxa"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="7D4FFB5B" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Đường đời
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="006AD4AA" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>7
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="1D6D21F3" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Phân tích, Kỹ thuật
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="7EBC36D9" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Bạn sở hữu trí tuệ sâu sắc, khả năng tự học và đào sâu vấn đề kỹ thuật...
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="15912ACB" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Kính hiển vi / Bánh răng
+<w:trPr><w:tblCellSpacing w:w="15" w:type="dxa"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="51D9D36E" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>...
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="2C90FE9A" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>...
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="5184130A" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>...
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="52DB5035" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>...
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="42A0D878" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>...
+BẢNG 2: MA TRẬN ÁNH XẠ NGHỀ NGHIỆP (LOGIC HTO)
+Đây là bảng quan trọng nhất để hệ thống tự động đưa ra tư vấn.
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblCellSpacing w:w="15" w:type="dxa"/><w:tblCellMar><w:top w:w="15" w:type="dxa"/><w:left w:w="15" w:type="dxa"/><w:bottom w:w="15" w:type="dxa"/><w:right w:w="15" w:type="dxa"/></w:tblCellMar><w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/></w:tblPr><w:tblGrid><w:gridCol w:w="1006"/><w:gridCol w:w="1209"/><w:gridCol w:w="1615"/><w:gridCol w:w="1491"/><w:gridCol w:w="4023"/></w:tblGrid><w:tr w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w14:paraId="31162E5B" w14:textId="77777777" w:rsidTr="00BA05F0"><w:trPr><w:tblHeader/><w:tblCellSpacing w:w="15" w:type="dxa"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="4981447F" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Con số chủ đạo
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="7F2DA82E" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Trình độ hiện tại
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="1599EA12" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Ngành học đề xuất
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="4CB563AB" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Thị trường mục tiêu
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="65BD7AA0" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Tại sao phù hợp? (Nội dung cho PDF)
+<w:trPr><w:tblCellSpacing w:w="15" w:type="dxa"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="3AFD37EB" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>4, 7, 8
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="1F570A90" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Đã tốt nghiệp ĐH
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="693D0822" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Kỹ thuật, Ô tô, Cơ khí
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="656DE7AD" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Đức (Diện 18b)
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="445DC432" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Tố chất logic và sự kỷ luật của bạn là chìa khóa để trở thành chuyên gia tại Đức.
+<w:trPr><w:tblCellSpacing w:w="15" w:type="dxa"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="17D42B0F" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>4, 7, 8
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="4184961F" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Học sinh PTTH
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="167FFB88" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Du học nghề Kỹ thuật
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="46E142D5" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Đức / Hàn Quốc
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="4ACDC895" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Bạn mạnh về thực hành, lộ trình vừa học vừa làm giúp bạn vững sự nghiệp sớm.
+<w:trPr><w:tblCellSpacing w:w="15" w:type="dxa"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="12B5BC2E" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:lastRenderedPageBreak/><w:t>2, 6, 9
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="6100E10A" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Đại học / PTTH
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="79C61C8A" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Điều dưỡng, Y tế
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="4041C727" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Canada / Úc
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="36820819" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Sự tử tế và thấu cảm tự nhiên của bạn cực kỳ phù hợp với tiêu chuẩn y tế tại Canada.
+<w:trPr><w:tblCellSpacing w:w="15" w:type="dxa"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="28E1E544" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>3, 5
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="7D251AA5" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Đại học / PTTH
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="137C2DF2" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Kinh tế, Marketing
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="1DFB5616" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Hàn Quốc / Đài Loan
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="4E22542C" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Sự linh hoạt và khả năng giao tiếp sẽ giúp bạn thành công tại các thị trường năng động này.
+BẢNG 3: DANH MỤC THỊ TRƯỜNG &amp; HẬU CẦN (HỆ SINH THÁI HTO)
+Bảng này dùng để "đổ" dữ liệu vào trang 5 và 6 của bản PDF.
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblCellSpacing w:w="15" w:type="dxa"/><w:tblCellMar><w:top w:w="15" w:type="dxa"/><w:left w:w="15" w:type="dxa"/><w:bottom w:w="15" w:type="dxa"/><w:right w:w="15" w:type="dxa"/></w:tblCellMar><w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/></w:tblPr><w:tblGrid><w:gridCol w:w="1213"/><w:gridCol w:w="2718"/><w:gridCol w:w="3718"/><w:gridCol w:w="1695"/></w:tblGrid><w:tr w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w14:paraId="10A49C52" w14:textId="77777777" w:rsidTr="00BA05F0"><w:trPr><w:tblHeader/><w:tblCellSpacing w:w="15" w:type="dxa"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="48CC2DC0" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Thị trường
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="5C03F7C3" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Ưu điểm nổi bật
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="1F44EBF4" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Hỗ trợ của HTO
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="321CA9A3" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Hotline/Liên hệ
+<w:trPr><w:tblCellSpacing w:w="15" w:type="dxa"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="160DC1EB" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Đức
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="28D51CD4" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Miễn 100% học phí, lương chuyên gia
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="12BFBD4C" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Thẩm định hồ sơ 3 lớp, luyện thi tiếng Đức
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="60CDBCA3" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>1800 9078
+<w:trPr><w:tblCellSpacing w:w="15" w:type="dxa"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="2BF3952E" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Canada
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="3AAEC2B4" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Định cư chắc chắn, an sinh tốt
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="5D7047AF" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Văn phòng Saskatchewan
+ đón sân bay, lo chỗ ở
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="377AEBAD" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>1800 9078
+<w:trPr><w:tblCellSpacing w:w="15" w:type="dxa"/></w:trPr><w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="5D46A6BF" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Hàn/Đài
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="7A77D78F" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Chi phí thấp, bằng quốc tế
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="6295888D" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Lộ trình chuyển tiếp 2+2, hỗ trợ học bổng
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/><w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:tcBorders><w:vAlign w:val="center"/><w:hideMark/></w:tcPr><w:p w14:paraId="1DA46FF4" w14:textId="77777777" w:rsidR="00BA05F0" w:rsidRPr="00BA05F0" w:rsidRDefault="00BA05F0" w:rsidP="00BA05F0"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00BA05F0"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>1800 9078
+💡
+ CÁCH ĐƯA TÀI LIỆU NÀY VÀO HỆ THỐNG (DÀNH CHO DEV)
+Sau khi nhân sự của anh soạn xong file Excel này, lập trình viên sẽ thực hiện:
+Chuyển đổi sang JSON:
+ Chuyển các bảng Excel này thành định dạng dữ liệu máy tính đọc được (JSON).
+Xây dựng "Function Mapping":
+ Viết một đoạn code nhỏ để khi có đầu vào là (Ngày sinh + Tên + Học vấn), hệ thống sẽ tự động "tra bảng" để lấy ra đoạn nội dung tương ứng.
+Tích hợp Template PDF:
+ Sử dụng các thẻ giữ chỗ (Placeholders) như {{Ten_Hoc_Sinh}}, {{Noi_Dung_So_7}}, {{Thi_Truong_De_Xuat}}. Khi xuất file, hệ thống chỉ việc thay thế các thẻ này bằng dữ liệu thực tế đã tra được từ bảng.
+🚩
+ LƯU Ý CHO ANH HÙNG:
+Để bản báo cáo PDF trông "Tử tế" và chuyên nghiệp nhất, anh nên yêu cầu nhân sự:
+Viết theo ngôn ngữ truyền cảm hứng:
+ Đừng chỉ viết "Bạn hợp làm thợ", hãy viết "Bạn có tố chất của một kỹ sư lành nghề chuyên nghiệp".
+Lồng ghép hình ảnh thực tế:
+ Trang 6 của PDF nên có ảnh văn phòng HTO tại Canada hoặc ảnh anh ký kết với các trường để tăng độ tin cậy.
+Anh có cần tôi soạn chi tiết 
+"Nội dung mẫu của 1 bộ số" (ví dụ số 7 - diện Đức 18b)
+ để nhân sự của anh dựa vào đó làm mẫu không?
+dựa trên tài liệu về thần số học trên internet, bạn hãy tham khảo để : biên soạn một bộ khung nội dung chuẩn khoa học.
+và Sử dụng các bộ thư viện đó (Open-source) nhưng cần chỉnh sửa lại để phù hợp với văn hóa Việt Nam.https://thansohoc.net.vn/, https://tracuuthansohoc.com/, https://thansovietnam.vn/xem-than-so-hoc-online/?fullname=VU+DUC+HUNG&amp;birthday=25%2F10%2F1980
+Chào anh Hùng, dựa trên các nguồn tham khảo uy tín và phổ biến nhất tại Việt Nam hiện nay, kết hợp với triết lý hướng nghiệp của 
+HTO Group
+, tôi đã biên soạn một bộ khung nội dung chuẩn khoa học.
+Bộ khung này đã được "Việt hóa" để phù hợp với tâm lý học sinh/sinh viên Việt Nam: 
+không mê tín, tập trung vào năng lực thực tế và định hướng nghề nghiệp.
+📑
+ BỘ KHUNG NỘI DUNG THẦN SỐ HỌC HƯỚNG NGHIỆP HTO
+1. Hệ thống tính toán (Core Logic)
+Hệ thống sẽ sử dụng phương pháp Pythagoras truyền thống:
+Chỉ số Đường đời (Life Path):
+ Tổng ngày + tháng + năm sinh (Rút gọn về 1-9, 11, 22).
+Chỉ số Sứ mệnh (Destiny):
+ Chuyển đổi toàn bộ Họ và Tên thành số theo bảng chữ cái.
+Chỉ số Linh hồn (Soul Urge):
+ Tổng các nguyên âm trong tên (A, E, I, O, U).
+2. Thư viện nội dung mẫu (Biên soạn cho 9 con số chủ đạo)
+Dưới đây là nội dung mẫu cho 3 nhóm năng lực tiêu biểu mà HTO đang tư vấn:
+Nhóm 1: Nhà Phân Tích &amp; Chuyên Gia (Số 4, 7) - Phù hợp diện Đức 18b
+Đặc điểm:
+ Tư duy logic, thích đào sâu bản chất, làm việc có quy trình, kỷ luật cao.
+Lời khuyên:
+ Bạn không phù hợp với những công việc bề nổi. Bạn tỏa sáng nhất khi được làm việc với máy móc, dữ liệu hoặc các quy trình kỹ thuật phức tạp.
+Kết nối HTO:
+ Với tư duy của một chuyên gia, chương trình 
+Đức diện 18b
+ hoặc các ngành kỹ thuật tại 
+Canada/Úc
+ là bệ phóng hoàn hảo để bạn trở thành nhân sự cao cấp toàn cầu.
+Nhóm 2: Người Kết Nối &amp; Chăm Sóc (Số 2, 6, 9) - Phù hợp Canada Healthcare
+Đặc điểm:
+ Giàu lòng trắc ẩn, thấu cảm, thích giúp đỡ người khác, có trách nhiệm xã hội.
+Lời khuyên:
+ Hạnh phúc của bạn đến từ việc mang lại giá trị cho cộng đồng. Những công việc đòi hỏi sự kiên nhẫn và chăm sóc sẽ giúp bạn thăng hoa.
+Kết nối HTO:
+ Ngành 
+Điều dưỡng &amp; Chăm sóc sức khỏe tại Canada
+ đang khát khao những người có tâm thế "Tử tế" như bạn. Đây là con đường định cư bền vững nhất.
+Nhóm 3: Người Tiên Phong &amp; Hành Động (Số 1, 8) - Phù hợp Hàn/Đài Kinh tế
+Đặc điểm:
+ Quyết đoán, tham vọng, có khả năng điều hành, chịu được áp lực cao.
+Lời khuyên:
+ Bạn sinh ra để dẫn dắt. Đừng ngại những thị trường cạnh tranh vì đó là nơi bạn khẳng định bản lĩnh.
+Kết nối HTO:
+ Các chương trình 
+Quản trị kinh doanh, Logistics tại Hàn Quốc/Đài Loan
+ sẽ giúp bạn tối ưu hóa khả năng quản trị và sớm trở thành nhà lãnh đạo tương lai.
+3. Hiệu chỉnh phù hợp Văn hóa &amp; Thực tế Việt Nam
+Thay vì dùng các thuật ngữ mang tính huyền bí, hệ thống HTO sẽ dùng ngôn ngữ thực tế:
+Tránh dùng:
+ "Định mệnh của bạn", "Nghiệp lực".
+Sử dụng:
+ "Thế mạnh bẩm sinh", "Vùng an toàn", "Điểm chạm nghề nghiệp".
+Yếu tố hiếu thảo:
+ Trong phần tư vấn, lồng ghép thêm yếu tố 
+"Chọn lộ trình phù hợp với tài chính ba mẹ"
+ (như anh đã nêu trong công thức Kiềng 3 chân).
+4. Cấu trúc dữ liệu để "Nhúng" vào App (JSON Structure)
+Để Dev của anh có thể nạp dữ liệu này vào hệ thống, anh hãy giao cho nhân sự soạn thảo theo cấu trúc sau:
+JSON
+{
+  "con_so_chu_dao": 7,
+  "ten_goi": "Người Tìm Kiếm Sự Thật",
+  "tu_khoa": ["Phân tích", "Trí tuệ", "Kỷ luật"],
+  "noi_dung_pdf": {
+    "tinh_cach": "Bạn có khả năng tự học tuyệt vời và luôn tìm kiếm bản chất của vấn đề...",
+    "diem_yeu": "Đôi khi quá khép kín hoặc cầu toàn thái quá.",
+    "nganh_goi_y": "Kỹ thuật, Công nghệ thông tin, Nghiên cứu khoa học.",
+    "lo_trinh_HTO": "Lao động chất lượng cao 18b tại Đức là bệ phóng giúp bạn vươn tầm chuyên gia quốc tế."
+  }
+}
+5. Phân tích trường hợp của anh (Tham khảo từ link anh gửi)
+Họ tên:
+ VŨ ĐỨC HÙNG | 
+Ngày sinh:
+ 25/10/1980.
+Số chủ đạo (Đường đời):
+ 2+5+1+0+1+9+8+0=26→2+6=8.
+Nhận định nhanh:
+ Số 8 là con số của 
+Người điều hành, Kinh doanh và Tài chính
+. Điều này giải thích tại sao anh đang dẫn dắt HTO Group với tầm nhìn chiến lược và sự quyết liệt.
+Ứng dụng vào App:
+ Khi học sinh có kết quả tương tự, hệ thống sẽ đề xuất các ngành về 
+Quản trị, Logistics hoặc Đầu tư
+ tại các thị trường phát triển.
+Bước tiếp theo:
+ Anh có thể yêu cầu nhân sự lấy bộ khung này, truy cập vào các link anh gửi để chắt lọc những đoạn mô tả hay nhất, sau đó biên soạn lại vào file Excel theo cấu trúc tôi đã gửi ở trên.
+kịch bản 3 câu hỏi trắc nghiệm tâm lý bổ trợ
+ (ngoài ngày sinh) để tăng độ chính xác cho việc gợi ý ngành nghề không?
+bổ sung các câu hỏi trắc nghiệm tâm lý (ngoài dữ liệu ngày sinh) sẽ giúp ứng dụng của anh trở nên khách quan hơn, tránh cảm giác "bói toán" thuần túy và giúp hệ thống lọc được nguyện vọng thực tế của học sinh.
+Dưới đây là kịch bản 
+3 câu hỏi bổ trợ
+ được thiết kế để kết hợp với thuật toán Thần số học nhằm đưa ra lộ trình HTO chính xác nhất:
+CÂU HỎI 1: XÁC ĐỊNH MÔI TRƯỜNG LÀM VIỆC LÝ TƯỞNG
+Đánh giá xem học sinh phù hợp với tính học thuật (18b) hay thực hành (Du học nghề/2+2).
+Câu hỏi:
+ Nếu được chọn một ngày làm việc trong tương lai, em sẽ chọn kịch bản nào?
+Các lựa chọn:
+A.
+ Ngồi trong một văn phòng hiện đại, nghiên cứu tài liệu, phân tích dữ liệu và giải quyết các bài toán khó. 
+(Thiên hướng: Chuyên gia diện 18b Đức/Canada).
+B.
+ Trực tiếp vận hành máy móc, lắp ráp linh kiện hoặc chăm sóc, hỗ trợ khách hàng/bệnh nhân. 
+(Thiên hướng: Du học nghề Đức/Healthcare Canada).
+C.
+ Liên tục di chuyển, gặp gỡ đối tác, đàm phán và tổ chức các sự kiện. 
+(Thiên hướng: Kinh tế Hàn/Đài, Logistics).
+CÂU HỎI 2: ĐỘNG LỰC CÁ NHÂN (KIỀNG 3 CHÂN - HIỂU THỰC TẾ)
+Đánh giá khả năng tài chính và mục tiêu định cư để lọc thị trường.
+Câu hỏi:
+ Đâu là ưu tiên lớn nhất của em khi bước chân ra thế giới?
+Các lựa chọn:
+A.
+ Tiết kiệm chi phí tối đa, vừa học vừa có lương để tự lập ngay lập tức. 
+(Lộ trình: Du học nghề Đức 0 đồng).
+B.
+ Có bằng cấp quốc tế danh giá và làm việc tại các tập đoàn lớn. 
+(Lộ trình: Chuyển tiếp 2+2 Hàn/Đài hoặc Thạc sĩ).
+C.
+ Tìm kiếm cơ hội định cư lâu dài và đưa gia đình sang sinh sống. 
+(Lộ trình: Canada Healthcare/Úc).
+CÂU HỎI 3: PHẢN XẠ TRƯỚC SỰ THAY ĐỔI (SỐ HÓA &amp; AI)
+Đánh giá khả năng thích nghi để gợi ý ngành học bền vững.
+Câu hỏi:
+ Khi đối mặt với một công nghệ mới (như AI) có thể thay thế công việc con người, em sẽ làm gì?
+Các lựa chọn:
+A.
+ Học cách điều khiển nó, trở thành người làm chủ công nghệ và máy móc. 
+(Lộ trình: Kỹ thuật/Ô tô Đức).
+B.
+ Tập trung vào những giá trị con người mà AI không làm được như thấu cảm, chăm sóc. 
+(Lộ trình: Điều dưỡng/Y tế).
+C.
+ Tận dụng AI để tối ưu hóa việc kinh doanh và quản lý dòng tiền. 
+(Lộ trình: Quản trị/Logistics Hàn/Đài).
+💡
+ CÁCH KẾT HỢP VỚI THẦN SỐ HỌC (LOGIC APP)
+Hệ thống sẽ chấm điểm theo trọng số để ra kết quả cuối cùng:
+Nếu kết quả Thần số học là Số 7 (Chuyên gia) + Câu 1 chọn A + Câu 3 chọn A:
+👉
+ 
+Hệ thống kết luận:
+ "Bạn là Chuyên gia Kỹ thuật thực thụ".
+👉
+ 
+HTO đề xuất:
+ Diện 18b tại Đức (nếu đã tốt nghiệp ĐH) hoặc Du học nghề Kỹ thuật chất lượng cao.
+Nếu kết quả Thần số học là Số 9 (Nhân ái) + Câu 1 chọn B + Câu 2 chọn C:
+👉
+ 
+Hệ thống kết luận:
+ "Bạn là Người sứ giả cộng đồng".
+👉
+ 
+HTO đề xuất:
+ Ngành Chăm sóc sức khỏe tại Canada (Có văn phòng HTO Saskatchewan hỗ trợ).
+Nếu kết quả Thần số học là Số 8 (Điều hành) + Câu 1 chọn C + Câu 2 chọn B:
+👉
+ 
+Hệ thống kết luận:
+ "Bạn là Nhà quản lý tương lai".
+👉
+ 
+HTO đề xuất:
+ Lộ trình 2+2 hoặc Thạc sĩ tại Hàn Quốc/Đài Loan.
+🛠️
+ GHI CHÚ CHO BỘ PHẬN LẬP TRÌNH:
+UI/UX:
+ Thiết kế 3 câu hỏi này dưới dạng hình ảnh sinh động (Pictogram) để học sinh không cảm thấy đang làm bài kiểm tra.
+Data CRM:
+ Kết quả của 3 câu hỏi này cũng phải được đẩy về 
+Biz CRM
+ trong phần "Note" của khách hàng. Khi nhân viên gọi điện, họ sẽ nói: 
+"Chị thấy em có tố chất quản lý và rất quan tâm đến thị trường Hàn Quốc..."
+ -&gt; Tỉ lệ chốt đơn sẽ cực kỳ cao.
+Kịch bản tư vấn
+ sau khi có dữ liệu trăc nghiệm.
+ 
+ (Sales Script)
+ chuẩn xác dựa trên dữ liệu trắc nghiệm sẽ giúp nhân sự của anh (đặc biệt là Ban IV) chuyển đổi từ một "người tư vấn thông thường" thành một "chuyên gia định hướng".
+Dưới đây là kịch bản tư vấn mẫu được chia theo 3 nhóm đối tượng mục tiêu của HTO:
+📞
+ KỊCH BẢN TƯ VẤN DỰA TRÊN DỮ LIỆU APP (HTO GROUP)
+PHẦN 1: MỞ ĐẦU - KẾT NỐI DỰA TRÊN "SỰ TỬ TẾ"
+(Sau khi nhân sự nhận được Lead từ Biz CRM có đầy đủ: Tên, Số chủ đạo, Trình độ, Ngành gợi ý)
+Chuyên viên (CV):
+ "Dạ em chào [Tên học sinh], chị là [Tên chuyên viên] gọi đến từ 
+HTO Group – Đối tác hướng nghiệp của Đại học Cửu Long
+.
+Chị vừa nhận được bản kết quả giải mã năng lực của em qua App Zalo. Thật ấn tượng vì em có chỉ số đường đời là 
+số [X]
+ – đây là con số của những người có tố chất [Từ khóa tính cách: ví dụ: kỷ luật/thấu cảm]. Chị gọi để hỗ trợ em làm rõ hơn về lộ trình 'Đi làm nghề để về làm chủ' mà hệ thống vừa đề xuất cho em, em dành cho chị 2 phút nhé?"
+PHẦN 2: TƯ VẤN CHUYÊN SÂU THEO "CON SỐ &amp; THỰC TẾ"
+🎯
+ Trường hợp 1: Nhóm Kỹ thuật (Số 4, 7, 8) -&gt; Đề xuất ĐỨC (DIỆN 18B HOẶC NGHỀ)
+CV:
+ "Hệ thống phân tích em có tư duy logic rất sâu. Với bằng [Đại học/PTTH] hiện tại, lộ trình 
+diện 18b tại Đức
+ là bệ phóng tốt nhất. Em sẽ sang Đức với vị thế chuyên gia, mức lương khởi điểm từ 60-80 triệu. HTO sẽ đồng hành cùng em từ khâu luyện tiếng đến khi em ổn định cuộc sống tại Đức. Em có muốn chị gửi chi tiết danh sách các tập đoàn Đức đang tuyển vị trí này không?"
+🎯
+ Trường hợp 2: Nhóm Sức khỏe (Số 2, 6, 9) -&gt; Đề xuất CANADA (SASKATCHEWAN)
+CV:
+ "Chỉ số của em cho thấy em là người rất tử tế và biết quan tâm. Ngành 
+Chăm sóc sức khỏe tại Canada
+ đang cực kỳ khát nhân lực có tâm thế như em. Đặc biệt, HTO có văn phòng tại bang Saskatchewan sẽ đón em ngay tại sân bay và lo chỗ ăn ở. Đây là lộ trình định cư chắc chắn nhất cho gia đình em sau này. Em đã từng tìm hiểu về cuộc sống tại bang Saskatchewan chưa?"
+🎯
+ Trường hợp 3: Nhóm Quản trị (Số 1, 3, 5) -&gt; Đề xuất HÀN/ĐÀI (2+2 HOẶC THẠC SĨ)
+CV:
+ "Em có tố chất lãnh đạo và thích nghi rất nhanh. Lộ trình 
+chuyển tiếp 2+2 hoặc học Thạc sĩ tại Hàn/Đài
+ sẽ giúp em lấy bằng quốc tế với chi phí rất 'vừa túi tiền' ba mẹ nhưng thu nhập lại vượt trội. Đây là cách thông minh để em vừa nâng tầm bằng cấp, vừa bắt đầu sự nghiệp kinh doanh sớm. Em muốn học ở Seoul hay Đài Bắc?"
+PHẦN 3: KẾT THÚC - KÊU GỌI HÀNH ĐỘNG (CTA)
+CV:
+ "Vì em đã làm trắc nghiệm, chị đã giữ cho em một suất 
+Voucher giải mã năng lực chuyên sâu 1:1
+ cùng chuyên gia tại văn phòng HTO [Vĩnh Long/Cần Thơ]. Thứ 7 này em có thể mời cả ba mẹ cùng qua để chị tư vấn kỹ hơn về bài toán tài chính và lộ trình định cư cho gia đình mình nhé?"
+💡
+ 3 LƯU Ý QUAN TRỌNG CHO NHÂN VIÊN:
+Nhắc đến "Bệ phóng" và "Nguồn lực":
+ Luôn khẳng định học tại ĐH Cửu Long là nguồn lực, còn quốc tế là bệ phóng để học sinh cảm thấy an tâm.
+Thông tin minh bạch:
+ Nếu học sinh hỏi về chi phí, hãy bám sát "Kiềng 3 chân": "HTO luôn tư vấn dựa trên sự tử tế và túi tiền của ba mẹ, nên em yên tâm lộ trình này là tối ưu nhất."
+Sử dụng dữ liệu CRM:
+ Nếu trong App học sinh chọn câu hỏi bổ trợ là "Muốn tiết kiệm chi phí", nhân viên tuyệt đối không được lái sang thị trường Úc/Mỹ đắt đỏ mà phải tập trung vào Đức 0 đồng hoặc Hàn/Đài.
+Bảng khảo sát mức độ hài lòng (Feedback Form)
+ tích hợp ngay trên Zalo Mini App và đồng bộ về Biz CRM.
+📋
+ THIẾT KẾ BẢNG KHẢO SÁT (POST-ADVISORY FEEDBACK)
+Giao diện sẽ hiện lên sau khi chuyên viên tư vấn kết thúc cuộc gọi hoặc buổi tư vấn trực tiếp (Trigger qua Zalo OA).
+Tiêu đề:
+ ĐÁNH GIÁ TRẢI NGHIỆM TƯ VẤN HƯỚNG NGHIỆP HTO 
+Lời dẫn:
+ "Sự đóng góp của em giúp HTO hoàn thiện sứ mệnh mang lộ trình quốc tế đến gần hơn với học sinh Việt Nam."
+1. Đánh giá chất lượng chuyên viên (Thang điểm 1-5 sao)
+Nội dung:
+ Chuyên viên có am hiểu về kết quả Thần số học và lộ trình của em không?
+Tiêu chí:
+ (Thân thiện - Am hiểu - Trung thực).
+2. Đánh giá tính hữu ích của lộ trình đề xuất
+Câu hỏi:
+ Lộ trình [Thị trường] mà anh/chị vừa tư vấn có phù hợp với mong muốn và tài chính của em không?
+[ ] Rất phù hợp.
+[ ] Cần cân nhắc thêm.
+[ ] Chưa phù hợp.
+3. Ý kiến đóng góp (Open-ended)
+Câu hỏi:
+ Em có đề xuất gì để HTO phục vụ tốt hơn không? (Ví dụ: Cần thêm thông tin về chỗ ở tại Canada, cần thêm lớp tiếng Đức tại Vĩnh Long...).
+Làm khảo sát về chất lượng: Sau cuộc gọi này, hệ thống sẽ gửi về cho em một tin nhắn về đánh giá khảo sát của em về chất lượng dịch vụ chị vừa trao đổi với e, em làm form khảo sát dùm chị nhé.
+Cám ơn em và chúc e đạt được nhiều kết quả. 
+📊
+ KIẾN TRÚC QUẢN TRỊ DÀNH CHO CEO (DASHBOARD CHO ANH HÙNG)
+Dữ liệu từ Feedback này sẽ không chỉ nằm ở CRM mà nên được tổng hợp thành một Dashboard để anh theo dõi:
+Chỉ số CSAT (Customer Satisfaction Score):
+ Điểm hài lòng trung bình của khách hàng đối với từng nhân viên Ban IV.
+Tỉ lệ khớp (Match Rate):
+ Bao nhiêu % khách hàng cảm thấy lộ trình trắc nghiệm + tư vấn là chính xác.
+Báo cáo "Nỗi đau" khách hàng:
+ Tổng hợp các từ khóa khách hàng hay nhắc đến ở phần đóng góp (ví dụ: "Sợ học phí", "Lo tiếng anh") để anh điều chỉnh marketing.
+🔌
+ KẾT NỐI BIZ CRM (TRIGGER QUY TRÌNH TIẾP THEO)
+Dựa trên Feedback, Biz CRM sẽ tự động chạy các luồng sau:
+Nếu điểm 1-2 sao:
+ Tự động báo về quản lý Ban IV để kiểm tra lại cuộc gọi và xử lý khiếu nại (đúng tinh thần Tử tế).
+Nếu điểm 5 sao:
+ Tự động gửi một mã quà tặng (E-voucher) giảm phí dịch vụ hoặc tặng bộ tài liệu độc quyền của HTO như lời cảm ơn.
+💡
+ TỔNG KẾT TOÀN BỘ HỆ THỐNG ANH ĐÃ XÂY DỰNG:
+Phễu vào:
+ Infographic &amp; QR Code tại ĐH Cửu Long.
+Cỗ máy lọc:
+ Zalo Mini App trắc nghiệm Thần số học + 3 câu hỏi tâm lý.
+Hệ thống xử lý:
+ Backend tính toán, xuất PDF cá nhân hóa, gửi Email tự động.
+Chuyển đổi:
+ Đẩy Lead về Biz CRM cho Ban IV gọi điện theo kịch bản "chạm cảm xúc".
+Kiểm soát:
+ Feedback Form đo lường chất lượng tư vấn.
+vậy khi mà học sinh đánh giá khảo sát feeback form đo lường chất lượng tư vấ thì chúng ta sẽ tích hợp kiểu gì và gửi cho học sinh kiểu gì để học sinh có thể nhận được và đánh giá? hay là hệ thống CRM sau khi tư vấn viên gọi xong, hệ thống sẽ tự động gửi về cho khách hàng 1 tin nhắn trên zalo oa và đường link về khảo sát được gắn liền với CRM biz
+Chào anh Hùng, anh đã nắm bắt rất đúng quy trình vận hành tự động (Automation) rồi đấy. Để hệ thống hoạt động chuyên nghiệp và 
+tử tế
+, chúng ta không nên để nhân viên tự gửi thủ công (vì có thể họ sẽ quên hoặc chỉ gửi cho khách hàng hài lòng).
+Dưới đây là phương thức tích hợp tối ưu nhất giữa 
+Zalo Mini App - Biz CRM - Zalo OA
+:
+1. Luồng vận hành tự động (Workflow)
+Quy trình sẽ diễn ra hoàn toàn tự động để đảm bảo tính khách quan:
+Bước 1 - Kết thúc cuộc gọi:
+ Chuyên viên tư vấn sau khi gọi điện sẽ cập nhật trạng thái trên 
+Biz CRM
+ là 
+"Đã tư vấn"
+ hoặc 
+"Hoàn thành cuộc gọi"
+.
+Bước 2 - Kích hoạt (Trigger):
+ Ngay lập tức, Biz CRM sẽ gửi một tín hiệu (Webhook) sang hệ thống 
+Zalo OA
+.
+Bước 3 - Gửi tin nhắn tự động:
+ Hệ thống tự động gửi một tin nhắn 
+Zalo OA (ZNS)
+ đến số điện thoại của học sinh với nội dung cá nhân hóa:
+"Chào [Tên học sinh], cảm ơn em đã trao đổi cùng chuyên gia HTO Group. Để chúng tôi phục vụ em tốt hơn, mời em dành 30 giây để đánh giá buổi tư vấn vừa rồi nhé!"
+Bước 4 - Đường link tích hợp:
+ Trong tin nhắn có một nút bấm (Button) hoặc đường link. Khi học sinh nhấn vào, hệ thống sẽ mở trực tiếp trang 
+Feedback Form
+ ngay trong 
+Zalo Mini App
+.
+2. Cách tích hợp "Deep Link" với Biz CRM
+Để anh biết chính xác ai là người đánh giá và đánh giá cho nhân viên nào, đường link gửi đi sẽ được gắn các tham số ẩn (
+UTM Tracking/Metadata
+):
+Cấu trúc link mẫu:
+ https://zalo.me/s/HTO_App/?page=feedback&amp;lead_id=123&amp;staff_id=NV01
+Cơ chế:
+ Khi học sinh nhấn link, App sẽ tự động hiểu: "Đây là em A (Lead_ID 123) đang đánh giá cho chị B (Staff_ID NV01)". Học sinh không cần nhập lại tên hay số điện thoại, chỉ cần chọn số sao và gửi.
+3. Phương thức gửi: Tin nhắn ZNS hay Zalo OA thông thường?
+Anh nên sử dụng kết hợp cả hai để đạt hiệu quả cao nhất:
+<w:tblPr><w:tblW w:w="10380" w:type="dxa"/><w:tblCellMar><w:top w:w="15" w:type="dxa"/><w:left w:w="15" w:type="dxa"/><w:bottom w:w="15" w:type="dxa"/><w:right w:w="15" w:type="dxa"/></w:tblCellMar><w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/></w:tblPr><w:tblGrid><w:gridCol w:w="3187"/><w:gridCol w:w="3583"/><w:gridCol w:w="3610"/></w:tblGrid><w:tr w:rsidR="00467293" w:rsidRPr="00467293" w14:paraId="136E3E28" w14:textId="77777777" w:rsidTr="00467293"><w:trPr><w:tblHeader/></w:trPr><w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="2" w:space="0" w:color="C4C7C5"/><w:right w:val="nil"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:tcMar><w:top w:w="240" w:type="dxa"/><w:left w:w="0" w:type="dxa"/><w:bottom w:w="240" w:type="dxa"/><w:right w:w="0" w:type="dxa"/></w:tcMar><w:hideMark/></w:tcPr><w:p w14:paraId="2E9AF041" w14:textId="77777777" w:rsidR="00467293" w:rsidRPr="00467293" w:rsidRDefault="00467293" w:rsidP="00467293"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00467293"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:lastRenderedPageBreak/><w:t>Phương thức
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="2" w:space="0" w:color="C4C7C5"/><w:right w:val="nil"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:tcMar><w:top w:w="240" w:type="dxa"/><w:left w:w="0" w:type="dxa"/><w:bottom w:w="240" w:type="dxa"/><w:right w:w="0" w:type="dxa"/></w:tcMar><w:hideMark/></w:tcPr><w:p w14:paraId="08FFC6A2" w14:textId="77777777" w:rsidR="00467293" w:rsidRPr="00467293" w:rsidRDefault="00467293" w:rsidP="00467293"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00467293"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Ưu điểm
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="2" w:space="0" w:color="C4C7C5"/><w:right w:val="nil"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:tcMar><w:top w:w="240" w:type="dxa"/><w:left w:w="0" w:type="dxa"/><w:bottom w:w="240" w:type="dxa"/><w:right w:w="0" w:type="dxa"/></w:tcMar><w:hideMark/></w:tcPr><w:p w14:paraId="5773E03C" w14:textId="77777777" w:rsidR="00467293" w:rsidRPr="00467293" w:rsidRDefault="00467293" w:rsidP="00467293"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00467293"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Cách dùng
+<w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="2" w:space="0" w:color="C4C7C5"/><w:right w:val="nil"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:tcMar><w:top w:w="240" w:type="dxa"/><w:left w:w="0" w:type="dxa"/><w:bottom w:w="240" w:type="dxa"/><w:right w:w="0" w:type="dxa"/></w:tcMar><w:hideMark/></w:tcPr><w:p w14:paraId="07534EA4" w14:textId="77777777" w:rsidR="00467293" w:rsidRPr="00467293" w:rsidRDefault="00467293" w:rsidP="00467293"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00467293"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>ZNS (Zalo Notification Service)
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="2" w:space="0" w:color="C4C7C5"/><w:right w:val="nil"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:tcMar><w:top w:w="240" w:type="dxa"/><w:left w:w="0" w:type="dxa"/><w:bottom w:w="240" w:type="dxa"/><w:right w:w="0" w:type="dxa"/></w:tcMar><w:hideMark/></w:tcPr><w:p w14:paraId="21FC8F58" w14:textId="77777777" w:rsidR="00467293" w:rsidRPr="00467293" w:rsidRDefault="00467293" w:rsidP="00467293"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00467293"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Gửi được đến cả người chưa quan tâm OA, tỉ lệ đọc 95%.
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="2" w:space="0" w:color="C4C7C5"/><w:right w:val="nil"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:tcMar><w:top w:w="240" w:type="dxa"/><w:left w:w="0" w:type="dxa"/><w:bottom w:w="240" w:type="dxa"/><w:right w:w="0" w:type="dxa"/></w:tcMar><w:hideMark/></w:tcPr><w:p w14:paraId="7113EB6C" w14:textId="77777777" w:rsidR="00467293" w:rsidRPr="00467293" w:rsidRDefault="00467293" w:rsidP="00467293"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00467293"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Gửi ngay sau khi cuộc gọi kết thúc để lấy đánh giá tức thì.
+<w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="2" w:space="0" w:color="C4C7C5"/><w:right w:val="nil"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:tcMar><w:top w:w="240" w:type="dxa"/><w:left w:w="0" w:type="dxa"/><w:bottom w:w="240" w:type="dxa"/><w:right w:w="0" w:type="dxa"/></w:tcMar><w:hideMark/></w:tcPr><w:p w14:paraId="19CBE7EB" w14:textId="77777777" w:rsidR="00467293" w:rsidRPr="00467293" w:rsidRDefault="00467293" w:rsidP="00467293"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00467293"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Tin nhắn OA (Broadcast/Follower)
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="2" w:space="0" w:color="C4C7C5"/><w:right w:val="nil"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:tcMar><w:top w:w="240" w:type="dxa"/><w:left w:w="0" w:type="dxa"/><w:bottom w:w="240" w:type="dxa"/><w:right w:w="0" w:type="dxa"/></w:tcMar><w:hideMark/></w:tcPr><w:p w14:paraId="3E8CF458" w14:textId="77777777" w:rsidR="00467293" w:rsidRPr="00467293" w:rsidRDefault="00467293" w:rsidP="00467293"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00467293"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Miễn phí cho người đã quan tâm OA.
+<w:tcPr><w:tcW w:w="0" w:type="auto"/><w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="single" w:sz="2" w:space="0" w:color="C4C7C5"/><w:right w:val="nil"/></w:tcBorders><w:shd w:val="clear" w:color="auto" w:fill="auto"/><w:tcMar><w:top w:w="240" w:type="dxa"/><w:left w:w="0" w:type="dxa"/><w:bottom w:w="240" w:type="dxa"/><w:right w:w="0" w:type="dxa"/></w:tcMar><w:hideMark/></w:tcPr><w:p w14:paraId="4086A2DE" w14:textId="77777777" w:rsidR="00467293" w:rsidRPr="00467293" w:rsidRDefault="00467293" w:rsidP="00467293"><w:pPr><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:pPr><w:r w:rsidRPr="00467293"><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>Gửi nhắc lại sau 24h nếu học sinh chưa thực hiện khảo sát.
+4. Xử lý dữ liệu sau đánh giá (The Feedback Loop)
+Dữ liệu đánh giá từ Zalo Mini App sẽ được đẩy ngược lại về 
+Biz CRM
+ để cập nhật vào hồ sơ khách hàng:
+Nếu 5 sao:
+ CRM ghi nhận "Khách hàng hài lòng cao" -&gt; Tự động kích hoạt quy trình gửi tài liệu du học/học bổng.
+Nếu 1-2 sao:
+ CRM tạo ngay một 
+"Công việc khẩn cấp" (Ticket)
+ cho Trưởng bộ phận Ban IV để kiểm tra lại và gọi điện xử lý ngay trong ngày. Đây chính là cách HTO vận hành dựa trên 
+Sự Tử Tế
+ thực chất.
+5. Giao diện trải nghiệm cho học sinh
+Nên thiết kế trang Feedback cực kỳ đơn giản (Micro-survey):
+Hình ảnh:
+ Sử dụng các icon cảm xúc (Emoji) từ khóc đến cười để các bạn học sinh dễ chọn.
+Tính năng:
+ Sau khi gửi feedback, hệ thống hiện ngay thông báo: 
+"Cảm ơn em! Voucher quà tặng đã được gửi vào Zalo của em"
+. Điều này khuyến khích các em hoàn thành khảo sát.
+💡
+ Lời khuyên cho anh Hùng:
+Anh nên yêu cầu đội ngũ kỹ thuật Biz CRM thiết lập một 
+"Dashboard Báo cáo Chất lượng Tư vấn"
+. Mỗi sáng, anh chỉ cần dành 5 phút xem Dashboard là biết được hôm qua có bao nhiêu cuộc gọi, tỉ lệ hài lòng là bao nhiêu mà không cần phải đi hỏi từng người.
+soạn nội dung tin nhắn 
+ZNS (Zalo Notification Service)
+ cần sự tinh tế: phải vừa đủ chuyên nghiệp để đại diện cho HTO Group, vừa đủ gần gũi để một học sinh cấp 3 không cảm thấy bị làm phiền.
+Dưới đây là 2 mẫu kịch bản ZNS anh có thể cài đặt tự động trên Biz CRM để gửi ngay sau khi chuyên viên kết thúc tư vấn:
+MẪU 1: GỬI NGAY SAU KHI TƯ VẤN (Tập trung vào cảm xúc)
+Dùng khi nhân viên vừa gác máy hoặc vừa kết thúc buổi gặp trực tiếp.
+Tiêu đề:
+ Khảo sát trải nghiệm tư vấn HTO Group
+Nội dung:
+ "Chào [Tên_Học_Sinh], rất vui được đồng hành cùng em trong buổi tư vấn lộ trình [Thị_Trường_Đề_Xuất] vừa rồi. Để HTO có thể hỗ trợ em và các bạn học sinh tốt hơn, em giúp chị dành 30 giây đánh giá chất lượng tư vấn của anh/chị [Tên_Nhân_Viên] nhé. Mỗi ý kiến của em đều giúp HTO trở nên tử tế và hoàn thiện hơn mỗi ngày!"
+Nút bấm (CTA):
+ [Đánh giá ngay tại đây]
+Link:
+ Điều hướng trực tiếp vào trang Feedback của Mini App.
+MẪU 2: GỬI KÈM QUÀ TẶNG (Tăng tỉ lệ phản hồi)
+Dùng khi anh muốn thu thập dữ liệu khách quan tối đa.
+Tiêu đề:
+ Nhận Voucher quà tặng từ HTO Group
+Nội dung:
+ "Chúc mừng [Tên_Học_Sinh] đã hoàn thành buổi định hướng năng lực toàn cầu! HTO dành tặng em 01 
+Voucher Ưu đãi Dịch vụ
+ như một lời cảm ơn. Để kích hoạt quà tặng, em vui lòng hoàn thành 3 câu đánh giá ngắn về chuyên viên tư vấn của mình nhé. Lộ trình quốc tế đang chờ đón em!"
+Nút bấm (CTA):
+ [Đánh giá &amp; Nhận quà]
+🛠️
+ CHIẾN THUẬT TÍCH HỢP KỸ THUẬT (DÀNH CHO TEAM DEV/CRM)
+Để anh quản lý hiệu quả nhất, anh hãy yêu cầu team kỹ thuật cài đặt 3 "chân kiềng" sau:
+Cơ chế "No-Input":
+ Khi học sinh nhấn vào link từ Zalo, App phải tự nhận diện được ID của học sinh đó. Đừng bắt các em nhập lại SĐT hay Tên, các em sẽ thoát ngay lập tức.
+Thời gian gửi vàng:
+ Thiết lập Biz CRM gửi ZNS sau đúng 
+5 - 10 phút
+ kể từ khi trạng thái Lead chuyển sang "Đã tư vấn". Đây là lúc cảm xúc về buổi nói chuyện còn rõ nét nhất.
+Báo cáo Real-time:
+ Kết quả đánh giá phải được đẩy thẳng vào mục 
+"Lịch sử chăm sóc"
+ trên Biz CRM.
+Ví dụ:
+ Nếu học sinh đánh giá 1 sao và ghi "Nhân viên nói quá nhanh", anh sẽ thấy ngay dòng này trong hồ sơ khách hàng để có hướng điều chỉnh Ban IV.
+💡
+ LỜI KHUYÊN TỪ "SỰ TỬ TẾ" CỦA ANH HÙNG:
+Anh hãy tạo một văn hóa trong HTO: 
+"Feedback là món quà"
+.
+Cuối mỗi tháng, nhân viên nào có tỉ lệ 5 sao cao nhất và nhiều feedback tích cực nhất sẽ được thưởng nóng.
+Ngược lại, những trường hợp bị đánh giá thấp, anh hãy cùng nhân viên đó nghe lại ghi âm cuộc gọi để đào tạo lại.
+Việc này sẽ giúp đội ngũ của anh không chỉ làm việc vì KPI mà làm việc bằng cái tâm và sự tử tế thực sự với khách hàng.
+Hệ thống của anh bây giờ đã hoàn thiện từ lúc học sinh thấy QR Code đến lúc anh nhận báo cáo chất lượng nhân sự
+để hệ thống này đi vào vận hành trơn tru, việc làm tư tưởng cho đội ngũ nhân sự (đặc biệt là Ban IV) là cực kỳ quan trọng. Họ cần hiểu rằng công nghệ này là 
+công cụ hỗ trợ
+ giúp họ tư vấn nhàn hơn, chuyên nghiệp hơn chứ không phải là công cụ để "kiểm soát".
+Dưới đây là bản dự thảo Email anh có thể gửi cho toàn thể cán bộ nhân viên HTO Group:
+Tiêu đề:
+ [HTO GROUP] THÔNG BÁO TRIỂN KHAI HỆ THỐNG SỐ HÓA TƯ VẤN &amp; GIẢI MÃ NĂNG LỰC TOÀN CẦU
+Kính gửi:
+ Ban Giám đốc và toàn thể Cán bộ nhân viên HTO Group,
+Với mục tiêu lấy 
+"Sự Tử Tế"
+ làm kim chỉ nam và không ngừng nâng cao chất lượng dịch vụ, kể từ ngày [Ngày_Bắt_Đầu], HTO Group sẽ chính thức đưa vào vận hành hệ thống 
+Số hóa hướng nghiệp toàn diện
+.
+Đây là thành quả của nỗ lực chuyển đổi số, giúp HTO chuyên nghiệp hóa quy trình tư vấn và thấu hiểu khách hàng sâu sắc hơn. Cụ thể, hệ thống bao gồm:
+1. Công cụ "Săn Lead" Thông minh:
+Hệ thống 
+Zalo Mini App: Giải mã năng lực
+ sẽ thay thế các phương thức khảo sát thủ công. Khách hàng chỉ cần quét mã QR để nhận ngay bản báo cáo PDF phân tích năng lực theo Thần số học và định hướng ngành nghề quốc tế (Đức, Canada, Hàn/Đài...).
+2. Dữ liệu tập trung &amp; Kịch bản tư vấn cá nhân hóa:
+Toàn bộ thông tin từ Email, Địa chỉ đến Xu hướng tính cách của khách hàng sẽ được đẩy tự động về 
+Biz CRM
+. Các chuyên viên tư vấn sẽ có đầy đủ "vũ khí" để hiểu khách hàng trước khi nhấc máy, giúp tăng tỉ lệ chuyển đổi và uy tín của thương hiệu.
+3. Hệ thống đo lường chất lượng dịch vụ (Feedback Loop):
+Sau mỗi cuộc gọi, hệ thống ZNS sẽ tự động gửi khảo sát hài lòng đến khách hàng. Kết quả này là cơ sở để chúng ta:
+Vinh danh những cá nhân có tâm thế phục vụ tốt nhất.
+Kịp thời hỗ trợ, đào tạo những bộ phận cần cải thiện chất lượng.
+4. Thông điệp từ Chủ tịch:
+"Công nghệ chỉ là công cụ, con người HTO mới là yếu tố quyết định. Tôi mong muốn mỗi thành viên, đặc biệt là Ban IV, hãy tận dụng tối đa dữ liệu này để mang đến những lộ trình thực chất, phù hợp nhất với năng lực và tài chính của từng học sinh. Chúng ta không chỉ bán dịch vụ du học, chúng ta đang cùng nhau thiết kế tương lai cho thế hệ trẻ Việt Nam."
+Yêu cầu:
+Toàn bộ nhân sự Ban IV tham gia buổi đào tạo sử dụng hệ thống vào lúc [Giờ] ngày [Ngày].
+Bộ phận Kỹ thuật hỗ trợ đảm bảo các luồng Automation giữa Zalo - CRM luôn thông suốt.
+Mọi thắc mắc trong quá trình vận hành, anh chị em vui lòng phản hồi về Ban Giám đốc.
+Trân trọng,
+Vũ Đức Hùng
+ Chairman &amp; CEO HTO Group
+💡
+ Gợi ý thêm cho anh Hùng:
+Anh có thể tổ chức một buổi 
+"Lễ ra quân"
+ ngắn gọn tại văn phòng, thực hiện quét mã QR và trải nghiệm App ngay tại chỗ. Khi nhân viên thấy tận mắt sự kỳ diệu của việc nhập ngày sinh mà ra ngay lộ trình Đức 18b, họ sẽ rất hào hứng triển khai.
