@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700;800&display=swap");
+
 .page {
   padding: 16px 16px 96px 16px;
 }
@@ -11,4 +13,68 @@
 
 .zaui-list-item {
   cursor: pointer;
+}
+
+.font-quicksand {
+  font-family: "Quicksand", sans-serif;
+}
+
+.numerology-soft-shadow {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.numerology-glow-cyan {
+  box-shadow: 0 0 30px rgba(14, 165, 233, 0.3);
+}
+
+.numerology-glow-gold {
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.25);
+}
+
+.numerology-glow-pink {
+  box-shadow: 0 0 20px rgba(219, 39, 119, 0.3);
+}
+
+.numerology-orb-glow {
+  box-shadow: 0 0 40px 10px rgba(168, 85, 247, 0.3);
+}
+
+.numerology-title-glow {
+  text-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
+}
+
+.numerology-spin-slow {
+  animation: numerology-spin 20s linear infinite;
+}
+
+.numerology-spin-medium {
+  animation: numerology-spin 8s linear infinite;
+}
+
+.numerology-spin-reverse {
+  animation: numerology-spin 12s linear infinite reverse;
+}
+
+.numerology-fade-up {
+  animation: numerology-fade-up 0.6s ease-out forwards;
+}
+
+@keyframes numerology-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes numerology-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
