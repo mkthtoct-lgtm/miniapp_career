@@ -4,7 +4,7 @@ import {
   NumerologyResultData,
 } from "./types";
 
-const API_BASE = (import.meta as any).env?.VITE_NUMEROLOGY_API_BASE || "https://api.hto.edu.vn/";
+const API_BASE = (import.meta as any).env?.VITE_NUMEROLOGY_API_BASE || "http://localhost:3003/";
 
 type AnalyzeApiResponse = {
   success: boolean;
@@ -47,6 +47,19 @@ type MetaApiResponse = {
   success: boolean;
   data?: {
     educationLevels: NumerologyEducationOption[];
+  };
+};
+
+type SendPdfEmailApiResponse = {
+  success: boolean;
+  message?: string;
+  data?: {
+    submissionId: string;
+    email: string;
+    filename: string;
+    mail?: {
+      messageId?: string | null;
+    };
   };
 };
 
@@ -235,6 +248,26 @@ export async function analyzeNumerology(values: NumerologyFormValues): Promise<N
 
 export function buildNumerologyPdfUrl(submissionId: string) {
   return `${API_BASE}/api/numerology/report/${submissionId}.pdf`;
+}
+
+export async function sendNumerologyPdfEmail(submissionId: string, email?: string) {
+  const response = await fetch(`${API_BASE}/api/numerology/report/${submissionId}/email`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+    }),
+  });
+
+  const json = await parseJsonSafe<SendPdfEmailApiResponse>(response);
+
+  if (!response.ok || !json?.success || !json.data) {
+    throw new Error(json?.message || "Không thể gửi báo cáo PDF qua email");
+  }
+
+  return json.data;
 }
 
 export { API_BASE, buildFallbackResult };

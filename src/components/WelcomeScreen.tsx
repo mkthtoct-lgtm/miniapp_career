@@ -96,7 +96,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart, onBack }) => {
         </h2>
 
         <p className="mt-2 px-1 text-center text-base font-medium leading-relaxed text-blue-100">
-          Kham pha lo trinh su nghiep den 2030 qua nhung cau hoi trac nghiem thu vi va chinh xac.
+          Khám phá lộ trình sự nghiệp đến 2030 qua những câu hỏi trắc nghiệm thú vị và chính xác.
         </p>
       </div>
 
