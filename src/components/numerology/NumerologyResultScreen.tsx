@@ -3,9 +3,12 @@ import React from "react";
 import NumerologyFrame from "./NumerologyFrame";
 import { NumerologyRadarScores, NumerologyResultData } from "./types";
 
+import qrZalo from "../../static/qr-zalo.jpg";
+
 type NumerologyResultScreenProps = {
   data: NumerologyResultData;
   onDownloadPdf?: () => void;
+  isSendingPdfEmail?: boolean;
   onConnectExpert?: () => void;
   onBack?: () => void;
 };
@@ -35,6 +38,7 @@ function buildRadarPoints(scores: NumerologyRadarScores) {
 const NumerologyResultScreen: React.FC<NumerologyResultScreenProps> = ({
   data,
   onDownloadPdf,
+  isSendingPdfEmail = false,
   onConnectExpert,
   onBack,
 }) => {
@@ -176,7 +180,7 @@ const NumerologyResultScreen: React.FC<NumerologyResultScreenProps> = ({
         </div>
 
         <div className="space-y-6 rounded-3xl border border-white/10 bg-white/5 p-5">
-          <h3 className="text-center text-xl font-bold uppercase tracking-wider text-blue-100">Hệ sinh thái hỗ trợ HTO Group</h3>
+          <h3 className="text-center text-xl font-bold uppercase tracking-wider text-blue-100">Hệ sinh thái hỗ trợ <br /> HTO Group</h3>
           {data.ecosystem.map((item, index) => (
             <div key={item.title} className="flex items-start gap-4">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center bg-blue-900 font-bold text-white">
@@ -192,7 +196,7 @@ const NumerologyResultScreen: React.FC<NumerologyResultScreenProps> = ({
 
         <div className="space-y-5 rounded-3xl bg-slate-50 p-6 text-slate-800">
           <div className="text-center">
-            <h3 className="mb-4 text-3xl font-bold italic text-blue-900">
+            <h3 className="mb-4 text-xl font-bold italic text-blue-900">
               "Học tinh hoa thế giới -
               <br />
               Trở về xây dựng quê hương"
@@ -216,18 +220,14 @@ const NumerologyResultScreen: React.FC<NumerologyResultScreenProps> = ({
                 <strong>Hotline:</strong> 1800 9078
               </p>
               <p>
-                <strong>Địa chỉ:</strong> Văn phòng HTO gần bạn nhất
+                <strong>Địa chỉ:</strong> Tầng 1, Tòa nhà Gold Star 12, số 284/41/2 đường Lý Thường Kiệt, Phường 14, Quận 10, TP. Hồ Chí Minh
               </p>
-              <p className="text-blue-600 underline">www.htogroup.vn</p>
+              <p className="text-blue-600 underline">www.htogroup.com.vn</p>
             </div>
 
             <div className="text-right">
               <div className="inline-flex border border-slate-200 bg-white p-2">
-                <div className="flex h-24 w-24 items-center justify-center bg-slate-100 p-2 text-center text-[8px] uppercase">
-                  Quét Zalo
-                  <br />
-                  Nhận tư vấn
-                </div>
+                <img src={qrZalo} alt="QR Zalo" className="h-24 w-24 object-contain" />
               </div>
             </div>
           </div>
@@ -237,12 +237,14 @@ const NumerologyResultScreen: React.FC<NumerologyResultScreenProps> = ({
           <button
             type="button"
             onClick={onDownloadPdf}
-            className="numerology-glow-pink flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-amber-400/70 bg-gradient-to-r from-purple-700 to-pink-600 py-4 text-base font-bold text-white transition-transform active:scale-[0.98]"
+            disabled={isSendingPdfEmail}
+            aria-busy={isSendingPdfEmail}
+            className="numerology-glow-pink flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-amber-400/70 bg-gradient-to-r from-purple-700 to-pink-600 py-4 text-base font-bold text-white transition-transform active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
           >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className={`h-5 w-5 ${isSendingPdfEmail ? "animate-spin" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
-            Tải báo cáo chi tiết qua Email
+            {isSendingPdfEmail ? "Đang gửi PDF qua Email..." : "Gửi báo cáo PDF qua Email"}
           </button>
 
           <button
